@@ -25,7 +25,7 @@ def sim(file, file_path, sim_params={}, close=True):
     if close is True:
         server.plecs.close(file)
     
-    return t, sim_data
+    return (t, sim_data)
 
 
 def gen_m(file, file_path, params):
