@@ -1,5 +1,5 @@
 Plecs {
-  Name          "example"
+  Name          "simple_example"
   Version       "4.7"
   CircuitModel  "ContStateSpace"
   StartTime     "0.0"
@@ -23,7 +23,7 @@ Plecs {
   MaxConsecutiveZCs "1000"
   AlgebraicLoopWithStateMachineMsg "3"
   AssertionAction "1"
-  InitializationCommands "source(\"example.m\")"
+  InitializationCommands "source(\"simple_example.m\")"
   InitialState  "1"
   SystemState   ""
   TaskingMode   "1"
@@ -51,103 +51,11 @@ Plecs {
     Index         "1"
   }
   Schematic {
-    Location      [101, 276; 842, 736]
+    Location      [1179, 187; 1920, 647]
     ZoomFactor    1.14437
     SliderPosition [0, -1]
     ShowBrowser   off
     BrowserWidth  100
-    Component {
-      Type          Integrator
-      Name          "Integrator"
-      Show          on
-      Position      [175, 150]
-      Direction     right
-      Flipped       off
-      LabelPosition south
-      Parameter {
-        Variable      "ExternalReset"
-        Value         "1"
-        Show          off
-      }
-      Parameter {
-        Variable      "InitialConditionSource"
-        Value         "1"
-        Show          off
-      }
-      Parameter {
-        Variable      "x0"
-        Value         "0"
-        Show          off
-      }
-      Parameter {
-        Variable      "ShowStatePort"
-        Value         "1"
-        Show          off
-      }
-      Parameter {
-        Variable      "EnableWrapping"
-        Value         "1"
-        Show          off
-      }
-      Parameter {
-        Variable      "UpperLimit"
-        Value         "inf"
-        Show          off
-      }
-      Parameter {
-        Variable      "LowerLimit"
-        Value         "-inf"
-        Show          off
-      }
-    }
-    Component {
-      Type          Gain
-      Name          "Gain"
-      Show          on
-      Position      [175, 200]
-      Direction     right
-      Flipped       on
-      LabelPosition south
-      Parameter {
-        Variable      "K"
-        Value         "a"
-        Show          off
-      }
-      Parameter {
-        Variable      "Multiplication"
-        Value         "1"
-        Show          off
-      }
-      Parameter {
-        Variable      "DataType"
-        Value         "10"
-        Show          off
-      }
-    }
-    Component {
-      Type          Sum
-      Name          "Sum"
-      Show          off
-      Position      [120, 150]
-      Direction     up
-      Flipped       off
-      LabelPosition south
-      Parameter {
-        Variable      "IconShape"
-        Value         "2"
-        Show          off
-      }
-      Parameter {
-        Variable      "Inputs"
-        Value         "|+-"
-        Show          off
-      }
-      Parameter {
-        Variable      "DataType"
-        Value         "10"
-        Show          off
-      }
-    }
     Component {
       Type          Constant
       Name          "Constant"
@@ -176,17 +84,17 @@ Plecs {
       Direction     up
       Flipped       off
       LabelPosition south
-      Location      [640, 280; 990, 527]
+      Location      [640, 280; 990, 547]
       State         "AAAA/wAAAAD9AAAAAgAAAAEAAAAAAAAAAPwCAAAAA/sAAAAQAFoAbwBvA"
 "G0AQQByAGUAYQAAAAAA/////wAAADQA////+wAAABQAUwBhAHYAZQBkAFYAaQBlAHcAcwAAAAAA//"
 "///wAAAGYA////+wAAAAwAVAByAGEAYwBlAHMAAAAAAP////8AAABmAP///wAAAAMAAAAAAAAAAPw"
-"BAAAAAfsAAAAUAEQAYQB0AGEAVwBpAGQAZwBlAHQAAAAAAP////8AAABQAP///wAAAV4AAADcAAAA"
+"BAAAAAfsAAAAUAEQAYQB0AGEAVwBpAGQAZwBlAHQAAAAAAP////8AAABQAP///wAAAV4AAADwAAAA"
 "BAAAAAQAAAAIAAAACPwAAAABAAAAAgAAAAEAAAAOAFQAbwBvAGwAQgBhAHIBAAAAAP////8AAAAAA"
 "AAAAA=="
       SavedViews    "AAAAAgAAAAA="
-      HeaderState   "AAAA/wAAAAAAAAABAAAAAQAAAAAAAAAAAAAAAAAAAAAL/gMAAAAJAAAAA"
-"gAAAGQAAAADAAAAZAAAAAEAAABkAAAABgAAAGQAAAAHAAAAZAAAAAQAAABkAAAABQAAAGQAAAAIAA"
-"AAZAAAAAkAAABkAAAAmAAAAAsBAAABAAAAAAAAAAAAAAAAZP////8AAACBAAAAAAAAAAsAAAB0AAA"
+      HeaderState   "AAAA/wAAAAAAAAABAAAAAQAAAAAAAAAAAAAAAAAAAAAL/gMAAAAJAAAAC"
+"QAAAGQAAAAGAAAAZAAAAAcAAABkAAAABAAAAGQAAAAFAAAAZAAAAAIAAABkAAAAAwAAAGQAAAABAA"
+"AAZAAAAAgAAABkAAAAmAAAAAsBAAABAAAAAAAAAAAAAAAAZP////8AAACBAAAAAAAAAAsAAAB0AAA"
 "AAQAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAQAAAAAAAAAA"
 "AAAAAQAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAQAAAAAAA"
 "AAkAAAAAQAAAAAAAAPoAAAAACQ="
@@ -252,7 +160,7 @@ Plecs {
       Type          Goto
       Name          "Goto"
       Show          off
-      Position      [235, 150]
+      Position      [190, 150]
       Direction     right
       Flipped       off
       LabelPosition south
@@ -357,41 +265,37 @@ Plecs {
         Show          off
       }
     }
-    Connection {
-      Type          Signal
-      SrcComponent  "Sum"
-      SrcTerminal   1
-      DstComponent  "Integrator"
-      DstTerminal   1
-    }
-    Connection {
-      Type          Signal
-      SrcComponent  "Gain"
-      SrcTerminal   2
-      Points        [120, 200]
-      DstComponent  "Sum"
-      DstTerminal   3
-    }
-    Connection {
-      Type          Signal
-      SrcComponent  "Integrator"
-      SrcTerminal   2
-      Points        [205, 150]
-      Branch {
-        DstComponent  "Gain"
-        DstTerminal   1
+    Component {
+      Type          TransferFunction
+      Name          "Transfer Fcn"
+      Show          on
+      Position      [130, 150]
+      Direction     right
+      Flipped       off
+      LabelPosition south
+      Frame         [-30, -15; 30, 15]
+      Parameter {
+        Variable      "Numerator"
+        Value         "[wn**2]"
+        Show          off
       }
-      Branch {
-        DstComponent  "Goto"
-        DstTerminal   1
+      Parameter {
+        Variable      "Denominator"
+        Value         "[1 2*zeta*wn wn**2]"
+        Show          off
+      }
+      Parameter {
+        Variable      "X0"
+        Value         "0"
+        Show          off
       }
     }
     Connection {
       Type          Signal
       SrcComponent  "From"
       SrcTerminal   1
-      DstComponent  "Sum"
-      DstTerminal   2
+      DstComponent  "Transfer Fcn"
+      DstTerminal   1
     }
     Connection {
       Type          Signal
@@ -430,6 +334,13 @@ Plecs {
         DstTerminal   1
       }
     }
+    Connection {
+      Type          Signal
+      SrcComponent  "Transfer Fcn"
+      SrcTerminal   2
+      DstComponent  "Goto"
+      DstTerminal   1
+    }
   }
 }
-DemoSignature "nSdSRcWRBwpPiyzT5ntJJkUdfE75BWxQS2vLtFt2mRE="
+DemoSignature "6K+3RCC6DQLjLT2uaMdQaM2+QmmT5emoZGwXhplwCEM="

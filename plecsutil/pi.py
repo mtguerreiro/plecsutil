@@ -22,10 +22,12 @@ def sim(file, file_path, sim_params={}, close=True):
     t = data['Time'][0]
     sim_data = data['Values'].T
 
+    plecs_header = data['__header__']
+
     if close is True:
         server.plecs.close(file)
     
-    return (t, sim_data)
+    return (t, sim_data, plecs_header)
 
 
 def gen_m(file, file_path, params):

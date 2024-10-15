@@ -1,8 +1,9 @@
 def params():
 
     params = {}
-    
-    params['a'] = 10
+
+    params['zeta'] = 0.7
+    params['wn'] = 20
 
     return params
 

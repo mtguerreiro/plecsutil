@@ -6,8 +6,17 @@ User interface
 import plecsutil as pu
 
 import numpy as np
+
+from dataclasses import dataclass
 import pickle
 import zipfile
+
+@dataclass
+class DataSet:
+    t : np.ndarray
+    data : np.ndarray
+    source : str
+    meta : {}
 
 
 class Sim:
@@ -22,29 +31,27 @@ class Sim:
         self._sim_data = {}
         
 
-    def run(self, params={}, save=False):
+    def run(self, sim_params={}, ctl_params={}, keep=True, save=False, close_sim=True):
 
-        run_params = self._params_cb()
+        model_params = self._params_cb()
 
-        for k, v in params.items():
-            if k not in run_params:
+        for k, v in sim_params.items():
+            if k not in model_params:
                 raise KeyError('Parameter \'{:}\' not a model parameter'.format(k))
-            run_params[k] = v
+            model_params[k] = v
 
-        t, data = pu.pi.sim(self._pfile, self._pfile_path, run_params)
+        t, data, plecs_header = pu.pi.sim(self._pfile, self._pfile_path, model_params, close=close_sim)
 
-        while True:
-
-            key = get_random_key()
-            if key in self._sim_data:
-                continue
-
-            self._sim_data[key] = [t, data, run_params]
-            break
-
+        meta = {'sim_params': model_params, 'ctl_params': ctl_params}
+        sim_data = DataSet(t, data, plecs_header, meta)
+        
+        if keep is True:
+            key = self.get_random_key()
+            self._sim_data[key] = sim_data    
+         
         if save:
-            save_data(save, [t, data, run_params])
-
+            save_data(save, sim_data)
+            
         return key
 
 
@@ -53,18 +60,24 @@ class Sim:
         if key not in self._sim_data:
             raise KeyError('Invalid key.'.format(k))
 
-        return (self._sim_data[key][0], self._sim_data[key][1], self._sim_data[key][2])
+        return self._sim_data[key]
 
 
-def get_random_key():
+    def get_random_key(self):
 
-    return np.random.randint(2**32)
+        while True:
+            key = np.random.randint(2**31)
+            if key in self._sim_data:
+                continue
+            break
+            
+        return key
 
 
-def load_data(path, file):
+def load_data(file):
 
-    with zipfile.ZipFile(path + file + '.zip', 'r') as zipf:
-        data_bytes = zipf.read(file)
+    with zipfile.ZipFile(file + '.zip', 'r') as zipf:
+        data_bytes = zipf.read('DataSet')
 
     data = pickle.loads(data_bytes)
 
@@ -74,4 +87,4 @@ def load_data(path, file):
 def save_data(file, data):
 
     with zipfile.ZipFile(file + '.zip', 'w', compression=zipfile.ZIP_LZMA) as zipf:
-        zipf.writestr(file, pickle.dumps(data))
+        zipf.writestr('DataSet', pickle.dumps(data))
