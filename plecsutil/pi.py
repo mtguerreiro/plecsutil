@@ -37,9 +37,18 @@ def gen_m(file, file_path, params):
     for p, v in params.items():
 
         if type(v) is np.ndarray:
-            v = np.array2string(v, separator=',', floatmode='unique').replace('\n', '')
+            v = _format_np_array_string(v)
 
         m_txt += '{:} = {:};\n'.format(p, v)
 
     with open(file_path + '/' + file + '.m', 'w') as f:
         f.write(m_txt)
+
+
+def _format_np_array_string(arr):
+
+    arr_txt = np.array2string(arr, separator=',', floatmode='unique')
+    arr_txt = arr_txt.replace('\n', '')
+    arr_txt = arr_txt.replace('],', '];')
+
+    return arr_txt    

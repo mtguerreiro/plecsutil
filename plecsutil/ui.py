@@ -21,7 +21,7 @@ class DataSet:
 
 class Sim:
 
-    def __init__(self, pfile, pfile_path, params_cb, ctl={}):
+    def __init__(self, pfile, pfile_path, params_cb, ctl_params_cb=None, n_ctl=1):
 
         self._pfile = pfile
         self._pfile_path = pfile_path
@@ -29,16 +29,30 @@ class Sim:
         self._params_cb = params_cb
 
         self._sim_data = {}
+
+        self._n_ctl = n_ctl
+        self._ctl_params_cb = ctl_params_cb
         
 
     def run(self, sim_params={}, ctl_params={}, keep=True, save=False, close_sim=True):
 
         model_params = self._params_cb()
 
+        # Updates model params with sim params
         for k, v in sim_params.items():
             if k not in model_params:
                 raise KeyError('Parameter \'{:}\' not a model parameter'.format(k))
             model_params[k] = v
+
+        # Updates model params with ctl params
+        if self._ctl_params_cb:
+            if self._n_ctl == 1:
+                c_params = self._ctl_params_cb(ctl_params)
+
+            for k, v in c_params.items():
+                if k not in model_params:
+                    raise KeyError('Parameter \'{:}\' not a model parameter'.format(k))
+                model_params[k] = v        
 
         t, data, plecs_header = pu.pi.sim(self._pfile, self._pfile_path, model_params, close=close_sim)
 
