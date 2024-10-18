@@ -52,7 +52,12 @@ class Sim:
 
         # Updates model params with ctl params
         if ctl:
-            c_params = self._controllers[ctl].get_gains(ctl_params)
+            n_ctl = len(self._controllers)
+            active_ctl = self._controllers[ctl].id
+            c_params = gen_controllers_params(n_ctl, active_ctl)
+
+            ctl_gains = self._controllers[ctl].get_gains(ctl_params)
+            c_params.update( ctl_gains )
             
             for k, v in c_params.items():
                 if k not in model_params:
@@ -93,14 +98,16 @@ class Sim:
         return key
 
 
-def gen_controllers_list(n_ctl, active_ctl):
+def gen_controllers_params(n_ctl, active_ctl):
 
-    txt = 'N_CTL = {:};'.format(n_ctl) +\
-          '\nCTL_SEL = {:};'.format(active_ctl) +\
-          '\n\nCTL_EN = zeros(1, N_CTL);' +\
-          '\nCTL_EN(CTL_SEL) = 1;'
+    ctls_params = {
+        'N_CTL': n_ctl,
+        'CTL_SEL': active_ctl,
+        'CTL_EN': 'zeros(1, N_CTL)',
+        'CTL_EN(CTL_SEL)': 1
+        }
 
-    return txt
+    return ctls_params
 
 
 def load_data(file):

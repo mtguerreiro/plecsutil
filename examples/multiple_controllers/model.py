@@ -14,16 +14,18 @@ def params():
     # Control parameters
     ts = 2e-3
     os = 5
-    ctl_params = get_controller_gains({'ts':ts, 'os':os})
+    ctl_params = sfb_get_gains({'ts':ts, 'os':os})
+
+    # List of controllers
+    n_ctl = len(CONTROLLERS)
+    active_ctl = 0
+    l_ctl = pu.ui.gen_controllers_params(n_ctl, active_ctl)
 
     # Params for plecs
     params = {}
-   
-    for k, v in plant_params.items():
-        params[k] = v
-    
-    for k, v in ctl_params.items():
-        params[k] = v
+    params.update(plant_params)
+    params.update(ctl_params)
+    params.update(l_ctl)
     
     return params
 
