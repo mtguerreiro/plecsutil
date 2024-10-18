@@ -11,6 +11,13 @@ from dataclasses import dataclass
 import pickle
 import zipfile
 
+
+@dataclass
+class Controller:
+    ctl_id : int
+    get_gains: callable
+
+
 @dataclass
 class DataSet:
     t : np.ndarray
@@ -21,7 +28,7 @@ class DataSet:
 
 class Sim:
 
-    def __init__(self, pfile, pfile_path, params_cb, ctl_params_cb=None, n_ctl=1):
+    def __init__(self, pfile, pfile_path, params_cb, controllers=None):
 
         self._pfile = pfile
         self._pfile_path = pfile_path
@@ -30,11 +37,10 @@ class Sim:
 
         self._sim_data = {}
 
-        self._n_ctl = n_ctl
-        self._ctl_params_cb = ctl_params_cb
-        
+        self._controllers = controllers
 
-    def run(self, sim_params={}, ctl_params={}, keep=True, save=False, close_sim=True):
+
+    def run(self, sim_params={}, ctl=None, ctl_params={}, keep=True, save=False, close_sim=True):
 
         model_params = self._params_cb()
 
@@ -45,14 +51,13 @@ class Sim:
             model_params[k] = v
 
         # Updates model params with ctl params
-        if self._ctl_params_cb:
-            if self._n_ctl == 1:
-                c_params = self._ctl_params_cb(ctl_params)
-
+        if ctl:
+            c_params = self._controllers[ctl].get_gains(ctl_params)
+            
             for k, v in c_params.items():
                 if k not in model_params:
                     raise KeyError('Parameter \'{:}\' not a model parameter'.format(k))
-                model_params[k] = v        
+                model_params[k] = v
 
         t, data, plecs_header = pu.pi.sim(self._pfile, self._pfile_path, model_params, close=close_sim)
 
@@ -72,7 +77,7 @@ class Sim:
     def get_sim_data(self, key):
 
         if key not in self._sim_data:
-            raise KeyError('Invalid key.'.format(k))
+            raise KeyError('Invalid key.')
 
         return self._sim_data[key]
 
@@ -86,6 +91,16 @@ class Sim:
             break
             
         return key
+
+
+def gen_controllers_list(n_ctl, active_ctl):
+
+    txt = 'N_CTL = {:};'.format(n_ctl) +\
+          '\nCTL_SEL = {:};'.format(active_ctl) +\
+          '\n\nCTL_EN = zeros(1, N_CTL);' +\
+          '\nCTL_EN(CTL_SEL) = 1;'
+
+    return txt
 
 
 def load_data(file):

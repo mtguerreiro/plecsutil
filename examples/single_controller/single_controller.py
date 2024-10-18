@@ -15,9 +15,9 @@ pfile = 'single_controller'
 pfile_path = os.path.abspath(os.getcwd())
 
 ctl_params = [
-    {'ts': 2.5e-3, 'os': 5},
+    {'ts': 1e-3, 'os': 5},
     {'ts': 5e-3, 'os': 5},
-    {'ts': 7.5e-3, 'os': 5}
+    {'ts': 10e-3, 'os': 5}
     ]
 
 # --- Sim ---
