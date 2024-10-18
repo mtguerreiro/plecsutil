@@ -14,8 +14,9 @@ import zipfile
 
 @dataclass
 class Controller:
-    ctl_id : int
-    get_gains: callable
+    ctl_id : int = 1
+    get_gains : callable = None
+    label : str = ''
 
 
 @dataclass
@@ -43,26 +44,17 @@ class Sim:
     def run(self, sim_params={}, ctl=None, ctl_params={}, keep=True, save=False, close_sim=True):
 
         model_params = self._params_cb()
+        model_ctl_params = self.get_model_ctl_params(ctl, ctl_params)
+        
+        user_params = {}
+        user_params.update(sim_params)
+        user_params.update(model_ctl_params)
 
-        # Updates model params with sim params
-        for k, v in sim_params.items():
+        # Updates model params with user params (sim + ctl)
+        for k, v in user_params.items():
             if k not in model_params:
                 raise KeyError('Parameter \'{:}\' not a model parameter'.format(k))
             model_params[k] = v
-
-        # Updates model params with ctl params
-        if ctl:
-            n_ctl = len(self._controllers)
-            active_ctl = self._controllers[ctl].id
-            c_params = gen_controllers_params(n_ctl, active_ctl)
-
-            ctl_gains = self._controllers[ctl].get_gains(ctl_params)
-            c_params.update( ctl_gains )
-            
-            for k, v in c_params.items():
-                if k not in model_params:
-                    raise KeyError('Parameter \'{:}\' not a model parameter'.format(k))
-                model_params[k] = v
 
         t, data, plecs_header = pu.pi.sim(self._pfile, self._pfile_path, model_params, close=close_sim)
 
@@ -85,6 +77,25 @@ class Sim:
             raise KeyError('Invalid key.')
 
         return self._sim_data[key]
+
+
+    def get_model_ctl_params(self, ctl, ctl_params):
+
+        model_ctl_params = {}
+        
+        if ctl:
+            n_ctl = len(self._controllers)
+            active_ctl = self._controllers[ctl].ctl_id
+            c_params = gen_controllers_params(n_ctl, active_ctl)
+            model_ctl_params.update( c_params )
+
+            ctl_gains = self._controllers[ctl].get_gains(ctl_params)
+            model_ctl_params.update( ctl_gains )
+
+        elif ctl_params:
+            model_ctl_params.update( self._controllers.get_gains(ctl_params) )
+
+        return model_ctl_params
 
 
     def get_random_key(self):

@@ -25,7 +25,7 @@ ctl_params = [
 sim = pu.ui.Sim(
     pfile, pfile_path,
     model.params,
-    ctl_params_cb=model.get_controller_gains
+    controllers=model.CONTROLLERS
     )
 
 # Runs simulations (and saves data)

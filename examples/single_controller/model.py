@@ -1,6 +1,8 @@
 import numpy as np
 import scipy.signal
 
+import plecsutil as pu
+
 def params():
 
     # Plant parameters
@@ -9,7 +11,7 @@ def params():
     # Control parameters
     ts = 2e-3
     os = 5
-    ctl_params = get_controller_gains({'ts':ts, 'os':os})
+    ctl_params = sfb_get_gains({'ts':ts, 'os':os})
 
     # Params for plecs
     params = {}
@@ -47,7 +49,7 @@ def get_plant_params():
     return {'A':A, 'B':B, 'C':C}
 
 
-def get_controller_gains(ctl_params):
+def sfb_get_gains(ctl_params):
     
     ts = ctl_params['ts']
     os = ctl_params['os']
@@ -77,3 +79,7 @@ def get_controller_gains(ctl_params):
     Ke = K[0, 2]
     
     return {'Kx': Kx, 'Ke': Ke}
+
+
+CONTROLLERS = pu.ui.Controller(get_gains=sfb_get_gains)
+

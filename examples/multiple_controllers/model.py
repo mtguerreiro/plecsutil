@@ -1,8 +1,6 @@
 import numpy as np
 import scipy.signal
 
-from dataclasses import dataclass
-
 import plecsutil as pu
 
     
@@ -87,5 +85,6 @@ def sfb_get_gains(ctl_params):
 
 
 CONTROLLERS = {
-    'sfb': pu.ui.Controller(0, sfb_get_gains)
+    'sfb':  pu.ui.Controller(1, sfb_get_gains),
+    'sfb2': pu.ui.Controller(2, sfb_get_gains)
 }
