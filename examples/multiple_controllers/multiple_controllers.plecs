@@ -65,7 +65,7 @@ Plecs {
     Index         "3"
   }
   Schematic {
-    Location      [60, 222; 895, 845]
+    Location      [2280, 228; 3115, 851]
     ZoomFactor    1.14437
     SliderPosition [0, 0]
     ShowBrowser   off
@@ -540,7 +540,7 @@ Plecs {
         Direction     left
       }
       Schematic {
-        Location      [2494, 234; 3146, 734]
+        Location      [2659, 131; 3311, 631]
         ZoomFactor    1.14437
         SliderPosition [0, 0]
         ShowBrowser   off
@@ -1454,7 +1454,7 @@ Plecs {
             Index         "3"
           }
           Schematic {
-            Location      [2865, 263; 3407, 647]
+            Location      [2786, 247; 3509, 631]
             ZoomFactor    1
             SliderPosition [0, 0]
             ShowBrowser   off
@@ -1463,7 +1463,7 @@ Plecs {
               Type          Enable
               Name          "Enable"
               Show          on
-              Position      [355, 45]
+              Position      [420, 45]
               Direction     right
               Flipped       off
               LabelPosition south
@@ -1497,7 +1497,7 @@ Plecs {
               Type          Integrator
               Name          "Integrator"
               Show          on
-              Position      [235, 205]
+              Position      [185, 250]
               Direction     right
               Flipped       off
               LabelPosition south
@@ -1541,7 +1541,7 @@ Plecs {
               Type          Sum
               Name          "Sum"
               Show          off
-              Position      [180, 205]
+              Position      [130, 250]
               Direction     up
               Flipped       off
               LabelPosition south
@@ -1570,10 +1570,10 @@ Plecs {
               Type          From
               Name          "From6"
               Show          off
-              Position      [180, 245]
-              Direction     up
+              Position      [85, 310]
+              Direction     right
               Flipped       off
-              LabelPosition east
+              LabelPosition south
               Parameter {
                 Variable      "Tag"
                 Value         "y"
@@ -1589,7 +1589,7 @@ Plecs {
               Type          Sum
               Name          "Sum1"
               Show          off
-              Position      [340, 205]
+              Position      [290, 250]
               Direction     up
               Flipped       off
               LabelPosition south
@@ -1618,13 +1618,13 @@ Plecs {
               Type          Gain
               Name          "Gain2"
               Show          on
-              Position      [295, 205]
+              Position      [245, 250]
               Direction     right
               Flipped       off
               LabelPosition south
               Parameter {
                 Variable      "K"
-                Value         "Ke"
+                Value         "k_ev"
                 Show          off
               }
               Parameter {
@@ -1647,13 +1647,13 @@ Plecs {
               Type          Gain
               Name          "Gain3"
               Show          on
-              Position      [305, 265]
+              Position      [245, 310]
               Direction     right
               Flipped       off
               LabelPosition south
               Parameter {
                 Variable      "K"
-                Value         "Kx"
+                Value         "kv"
                 Show          off
               }
               Parameter {
@@ -1669,25 +1669,6 @@ Plecs {
               Parameter {
                 Variable      "DataTypeOverflowMode"
                 Value         "1"
-                Show          off
-              }
-            }
-            Component {
-              Type          From
-              Name          "From7"
-              Show          off
-              Position      [260, 265]
-              Direction     right
-              Flipped       off
-              LabelPosition south
-              Parameter {
-                Variable      "Tag"
-                Value         "x"
-                Show          off
-              }
-              Parameter {
-                Variable      "Visibility"
-                Value         "2"
                 Show          off
               }
             }
@@ -1743,7 +1724,7 @@ Plecs {
               Type          Output
               Name          "u"
               Show          on
-              Position      [275, 55]
+              Position      [340, 55]
               Direction     right
               Flipped       off
               LabelPosition south
@@ -1828,25 +1809,6 @@ Plecs {
             }
             Component {
               Type          Goto
-              Name          "Goto1"
-              Show          off
-              Position      [135, 30]
-              Direction     right
-              Flipped       off
-              LabelPosition south
-              Parameter {
-                Variable      "Tag"
-                Value         "x"
-                Show          off
-              }
-              Parameter {
-                Variable      "Visibility"
-                Value         "2"
-                Show          off
-              }
-            }
-            Component {
-              Type          Goto
               Name          "Goto3"
               Show          off
               Position      [135, 100]
@@ -1868,7 +1830,7 @@ Plecs {
               Type          From
               Name          "From2"
               Show          off
-              Position      [225, 55]
+              Position      [290, 55]
               Direction     right
               Flipped       off
               LabelPosition south
@@ -1887,7 +1849,7 @@ Plecs {
               Type          From
               Name          "From8"
               Show          off
-              Position      [135, 205]
+              Position      [85, 250]
               Direction     right
               Flipped       off
               LabelPosition south
@@ -1903,10 +1865,222 @@ Plecs {
               }
             }
             Component {
+              Type          SignalDemux
+              Name          "Demux"
+              Show          off
+              Position      [95, 25]
+              Direction     right
+              Flipped       on
+              LabelPosition south
+              Parameter {
+                Variable      "Width"
+                Value         "2"
+                Show          off
+              }
+            }
+            Component {
+              Type          Goto
+              Name          "Goto2"
+              Show          off
+              Position      [135, 20]
+              Direction     right
+              Flipped       off
+              LabelPosition south
+              Parameter {
+                Variable      "Tag"
+                Value         "x1"
+                Show          off
+              }
+              Parameter {
+                Variable      "Visibility"
+                Value         "2"
+                Show          off
+              }
+            }
+            Component {
+              Type          Integrator
+              Name          "Integrator1"
+              Show          on
+              Position      [410, 250]
+              Direction     right
+              Flipped       off
+              LabelPosition south
+              Parameter {
+                Variable      "ExternalReset"
+                Value         "1"
+                Show          off
+              }
+              Parameter {
+                Variable      "InitialConditionSource"
+                Value         "1"
+                Show          off
+              }
+              Parameter {
+                Variable      "x0"
+                Value         "0"
+                Show          off
+              }
+              Parameter {
+                Variable      "ShowStatePort"
+                Value         "1"
+                Show          off
+              }
+              Parameter {
+                Variable      "EnableWrapping"
+                Value         "1"
+                Show          off
+              }
+              Parameter {
+                Variable      "UpperLimit"
+                Value         "inf"
+                Show          off
+              }
+              Parameter {
+                Variable      "LowerLimit"
+                Value         "-inf"
+                Show          off
+              }
+            }
+            Component {
+              Type          Sum
+              Name          "Sum2"
+              Show          off
+              Position      [355, 250]
+              Direction     up
+              Flipped       off
+              LabelPosition south
+              Parameter {
+                Variable      "IconShape"
+                Value         "2"
+                Show          off
+              }
+              Parameter {
+                Variable      "Inputs"
+                Value         "|+-"
+                Show          off
+              }
+              Parameter {
+                Variable      "DataType"
+                Value         "11"
+                Show          off
+              }
+              Parameter {
+                Variable      "DataTypeOverflowMode"
+                Value         "1"
+                Show          off
+              }
+            }
+            Component {
+              Type          Sum
+              Name          "Sum3"
+              Show          off
+              Position      [515, 250]
+              Direction     up
+              Flipped       off
+              LabelPosition south
+              Parameter {
+                Variable      "IconShape"
+                Value         "2"
+                Show          off
+              }
+              Parameter {
+                Variable      "Inputs"
+                Value         "|--"
+                Show          off
+              }
+              Parameter {
+                Variable      "DataType"
+                Value         "11"
+                Show          off
+              }
+              Parameter {
+                Variable      "DataTypeOverflowMode"
+                Value         "1"
+                Show          off
+              }
+            }
+            Component {
+              Type          Gain
+              Name          "Gain4"
+              Show          on
+              Position      [470, 250]
+              Direction     right
+              Flipped       off
+              LabelPosition south
+              Parameter {
+                Variable      "K"
+                Value         "k_ei"
+                Show          off
+              }
+              Parameter {
+                Variable      "Multiplication"
+                Value         "2"
+                Show          off
+              }
+              Parameter {
+                Variable      "DataType"
+                Value         "11"
+                Show          off
+              }
+              Parameter {
+                Variable      "DataTypeOverflowMode"
+                Value         "1"
+                Show          off
+              }
+            }
+            Component {
+              Type          Gain
+              Name          "Gain5"
+              Show          on
+              Position      [470, 310]
+              Direction     right
+              Flipped       off
+              LabelPosition south
+              Parameter {
+                Variable      "K"
+                Value         "ki"
+                Show          off
+              }
+              Parameter {
+                Variable      "Multiplication"
+                Value         "2"
+                Show          off
+              }
+              Parameter {
+                Variable      "DataType"
+                Value         "11"
+                Show          off
+              }
+              Parameter {
+                Variable      "DataTypeOverflowMode"
+                Value         "1"
+                Show          off
+              }
+            }
+            Component {
+              Type          From
+              Name          "From7"
+              Show          off
+              Position      [340, 310]
+              Direction     right
+              Flipped       off
+              LabelPosition south
+              Parameter {
+                Variable      "Tag"
+                Value         "x1"
+                Show          off
+              }
+              Parameter {
+                Variable      "Visibility"
+                Value         "2"
+                Show          off
+              }
+            }
+            Component {
               Type          Goto
               Name          "Goto4"
               Show          off
-              Position      [380, 205]
+              Position      [555, 250]
               Direction     right
               Flipped       off
               LabelPosition south
@@ -1920,13 +2094,6 @@ Plecs {
                 Value         "2"
                 Show          off
               }
-            }
-            Connection {
-              Type          Signal
-              SrcComponent  "From6"
-              SrcTerminal   1
-              DstComponent  "Sum"
-              DstTerminal   3
             }
             Connection {
               Type          Signal
@@ -1951,16 +2118,9 @@ Plecs {
             }
             Connection {
               Type          Signal
-              SrcComponent  "From7"
-              SrcTerminal   1
-              DstComponent  "Gain3"
-              DstTerminal   1
-            }
-            Connection {
-              Type          Signal
               SrcComponent  "Gain3"
               SrcTerminal   2
-              Points        [340, 265]
+              Points        [290, 310]
               DstComponent  "Sum1"
               DstTerminal   3
             }
@@ -1981,8 +2141,8 @@ Plecs {
                 DstTerminal   1
               }
               Branch {
-                Points        [60, 30]
-                DstComponent  "Goto1"
+                Points        [60, 25]
+                DstComponent  "Demux"
                 DstTerminal   1
               }
             }
@@ -2009,7 +2169,78 @@ Plecs {
             }
             Connection {
               Type          Signal
+              SrcComponent  "Demux"
+              SrcTerminal   2
+              DstComponent  "Goto2"
+              DstTerminal   1
+            }
+            Connection {
+              Type          Signal
+              SrcComponent  "From6"
+              SrcTerminal   1
+              Points        [130, 310]
+              Branch {
+                DstComponent  "Sum"
+                DstTerminal   3
+              }
+              Branch {
+                DstComponent  "Gain3"
+                DstTerminal   1
+              }
+            }
+            Connection {
+              Type          Signal
+              SrcComponent  "Sum2"
+              SrcTerminal   1
+              DstComponent  "Integrator1"
+              DstTerminal   1
+            }
+            Connection {
+              Type          Signal
+              SrcComponent  "Integrator1"
+              SrcTerminal   2
+              DstComponent  "Gain4"
+              DstTerminal   1
+            }
+            Connection {
+              Type          Signal
+              SrcComponent  "Gain4"
+              SrcTerminal   2
+              DstComponent  "Sum3"
+              DstTerminal   2
+            }
+            Connection {
+              Type          Signal
+              SrcComponent  "Gain5"
+              SrcTerminal   2
+              Points        [515, 310]
+              DstComponent  "Sum3"
+              DstTerminal   3
+            }
+            Connection {
+              Type          Signal
+              SrcComponent  "From7"
+              SrcTerminal   1
+              Points        [355, 310]
+              Branch {
+                DstComponent  "Sum2"
+                DstTerminal   3
+              }
+              Branch {
+                DstComponent  "Gain5"
+                DstTerminal   1
+              }
+            }
+            Connection {
+              Type          Signal
               SrcComponent  "Sum1"
+              SrcTerminal   1
+              DstComponent  "Sum2"
+              DstTerminal   2
+            }
+            Connection {
+              Type          Signal
+              SrcComponent  "Sum3"
               SrcTerminal   1
               DstComponent  "Goto4"
               DstTerminal   1
@@ -2214,17 +2445,17 @@ Plecs {
       Direction     up
       Flipped       off
       LabelPosition south
-      Location      [1570, 230; 1920, 509]
+      Location      [1570, 230; 1920, 517]
       State         "AAAA/wAAAAD9AAAAAgAAAAEAAAAAAAAAAPwCAAAAA/sAAAAQAFoAbwBvA"
 "G0AQQByAGUAYQAAAAAA/////wAAADEA////+wAAABQAUwBhAHYAZQBkAFYAaQBlAHcAcwAAAAAA//"
 "///wAAAGMA////+wAAAAwAVAByAGEAYwBlAHMAAAAAAP////8AAABjAP///wAAAAMAAAAAAAAAAPw"
-"BAAAAAfsAAAAUAEQAYQB0AGEAVwBpAGQAZwBlAHQAAAAAAP////8AAABEAP///wAAAV4AAAD4AAAA"
+"BAAAAAfsAAAAUAEQAYQB0AGEAVwBpAGQAZwBlAHQAAAAAAP////8AAABEAP///wAAAV4AAAEAAAAA"
 "BAAAAAQAAAAIAAAACPwAAAABAAAAAgAAAAEAAAAOAFQAbwBvAGwAQgBhAHIBAAAAAP////8AAAAAA"
 "AAAAA=="
       SavedViews    "AAAAAgAAAAA="
-      HeaderState   "AAAA/wAAAAAAAAABAAAAAQAAAAAAAAAAAAAAAAAAAAAL/gMAAAAJAAAAA"
-"gAAAGQAAAADAAAAZAAAAAgAAABkAAAACQAAAGQAAAAEAAAAZAAAAAUAAABkAAAABgAAAGQAAAAHAA"
-"AAZAAAAAEAAABkAAAAhAAAAAsBAAABAAAAAAAAAAAAAAAAZP////8AAACBAAAAAAAAAAsAAABhAAA"
+      HeaderState   "AAAA/wAAAAAAAAABAAAAAQAAAAAAAAAAAAAAAAAAAAAL/gMAAAAJAAAAC"
+"QAAAGQAAAAIAAAAZAAAAAUAAABkAAAABAAAAGQAAAAHAAAAZAAAAAYAAABkAAAAAQAAAGQAAAADAA"
+"AAZAAAAAIAAABkAAAAgwAAAAsBAAABAAAAAAAAAAAAAAAAZP////8AAACBAAAAAAAAAAsAAABgAAA"
 "AAQAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAQAAAAAAAAAA"
 "AAAAAQAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAQAAAAAAA"
 "AAjAAAAAQAAAAAAAAPoAAAAACM="
@@ -2233,7 +2464,7 @@ Plecs {
       TimeRange     "0.0"
       ScrollingMode "1"
       SingleTimeAxis "1"
-      Open          "1"
+      Open          "0"
       Ts            "-1"
       SampleLimit   "0"
       XAxisLabel    "Time / s"

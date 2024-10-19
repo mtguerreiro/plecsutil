@@ -12,7 +12,13 @@ def params():
     # Control parameters
     ts = 2e-3
     os = 5
-    ctl_params = sfb_get_gains({'ts':ts, 'os':os})
+
+    sfb_params = sfb_get_gains({'ts':ts, 'os':os})
+    casc_params = cascaded_get_gains({'ts':ts, 'os':os})
+
+    ctl_params = {}
+    ctl_params.update(sfb_params)
+    ctl_params.update(casc_params)
 
     # List of controllers
     n_ctl = len(CONTROLLERS)
@@ -69,8 +75,7 @@ def sfb_get_gains(ctl_params):
     Ba = np.zeros((3, 1))
     Ba[:2, 0] = B[:, 0]
 
-    zeta = -np.log(os / 100) / np.sqrt( np.pi**2 + np.log(os / 100)**2 )
-    wn = 4 / ts / zeta
+    zeta, wn = _zeta_wn(ts, os)
 
     p1 = - zeta * wn + 1j * wn * np.sqrt(1 - zeta**2)
     p2 = np.conj(p1)
@@ -84,7 +89,41 @@ def sfb_get_gains(ctl_params):
     return {'Kx': Kx, 'Ke': Ke}
 
 
+def cascaded_get_gains(ctl_params):
+
+    V_in = 24
+    L = 47e-6
+    R = 10
+    C = 220e-6
+
+    ts_v = ctl_params['ts']
+    os_v = ctl_params['os']
+    
+    os_i = os_v
+    ts_i = ts_v / 5
+
+    zeta_i, wn_i = _zeta_wn(ts_i, os_i)
+    ki = (L / V_in) * 2 * zeta_i * wn_i
+    k_ei = (L / V_in) * ( - wn_i**2 )
+
+    zeta_v, wn_v = _zeta_wn(ts_v, os_v)
+    kv = ( C ) * ( 2 * zeta_v * wn_v - 1 / R / C )
+    k_ev = ( C ) * ( - wn_v**2 )
+
+    params = {'ki': ki, 'k_ei': k_ei, 'kv': kv, 'k_ev':k_ev}
+
+    return params
+
+
+def _zeta_wn(ts, os):
+
+    zeta = -np.log(os / 100) / np.sqrt( np.pi**2 + np.log(os / 100)**2 )
+    wn = 4 / ts / zeta
+
+    return (zeta, wn)
+
+
 CONTROLLERS = {
     'sfb':  pu.ui.Controller(1, sfb_get_gains),
-    'sfb2': pu.ui.Controller(2, sfb_get_gains)
+    'cascaded': pu.ui.Controller(2, cascaded_get_gains)
 }

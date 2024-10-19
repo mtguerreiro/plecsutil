@@ -15,9 +15,8 @@ pfile = 'multiple_controllers'
 pfile_path = os.path.abspath(os.getcwd())
 
 ctl_params = [
-    {'ts': 1e-3, 'os': 5},
-    {'ts': 5e-3, 'os': 5},
-    {'ts': 10e-3, 'os': 5}
+    ['sfb', {'ts': 2e-3, 'os': 5}],
+    ['cascaded', {'ts': 2e-3, 'os': 5}],
     ]
 
 # --- Sim ---
@@ -31,7 +30,7 @@ sim = pu.ui.Sim(
 # Runs simulations (and saves data)
 keys = []
 for cp in ctl_params:
-    key = sim.run(ctl='sfb', ctl_params=cp, close_sim=False)
+    key = sim.run(ctl=cp[0], ctl_params=cp[1], close_sim=False)
     keys.append(key)
 
 # --- Results ---
@@ -45,7 +44,7 @@ xlim = [0, 10]
 
 ax = plt.subplot(3,1,1)
 for d in data:
-    label = '$T_s = {:}$ ms'.format( d.meta['ctl_params']['ts'] / 1e-3 )
+    label = '{:}'.format( d.meta['ctl_params']['label'] )
     plt.plot(d.t / 1e-3, d.data[:, 2], label=label)
 plt.grid()
 plt.ylabel('$u$')
