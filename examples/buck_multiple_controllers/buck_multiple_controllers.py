@@ -16,7 +16,7 @@ pfile_path = os.path.abspath(os.getcwd())
 
 ctl_params = [
     ['sfb', {'ts': 2e-3, 'os': 5}],
-    ['cascaded', {'ts': 2e-3, 'os': 5}],
+    ['casc', {'ts': 2e-3, 'os': 5}],
     ]
 
 # --- Sim ---
@@ -45,8 +45,8 @@ xlim = [0, 20]
 ax = plt.subplot(3,1,1)
 plt.title('Duty-cycle')
 for d in data:
-    #label = '$T_s = {:}$ ms'.format( d.meta['ctl_params']['ts'] / 1e-3 )
-    plt.step(d.t / 1e-3, d.data[:, 3], where='post')
+    label = '{:}'.format( d.meta['ctl_label'] )
+    plt.step(d.t / 1e-3, d.data[:, 3], where='post', label=label)
 plt.grid()
 plt.ylabel('$u$')
 plt.legend()

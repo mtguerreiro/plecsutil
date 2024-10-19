@@ -44,7 +44,7 @@ class Sim:
     def run(self, sim_params={}, ctl=None, ctl_params={}, keep=True, save=False, close_sim=True):
 
         model_params = self._params_cb()
-        model_ctl_params = self.get_model_ctl_params(ctl, ctl_params)
+        model_ctl_params, ctl_label = self.get_model_ctl_params(ctl, ctl_params)
         
         user_params = {}
         user_params.update(sim_params)
@@ -59,6 +59,9 @@ class Sim:
         t, data, plecs_header = pu.pi.sim(self._pfile, self._pfile_path, model_params, close=close_sim)
 
         meta = {'sim_params': model_params, 'ctl_params': ctl_params}
+        if ctl is not None:
+            meta.update( {'ctl': ctl, 'ctl_label': ctl_label} )
+        
         sim_data = DataSet(t, data, plecs_header, meta)
         
         if keep is True:
@@ -82,6 +85,7 @@ class Sim:
     def get_model_ctl_params(self, ctl, ctl_params):
 
         model_ctl_params = {}
+        ctl_label = None
         
         if ctl:
             n_ctl = len(self._controllers)
@@ -91,11 +95,11 @@ class Sim:
 
             ctl_gains = self._controllers[ctl].get_gains(ctl_params)
             model_ctl_params.update( ctl_gains )
-
+            ctl_label = self._controllers[ctl].label
         elif ctl_params:
             model_ctl_params.update( self._controllers.get_gains(ctl_params) )
 
-        return model_ctl_params
+        return model_ctl_params, ctl_label
 
 
     def get_random_key(self):
