@@ -41,7 +41,7 @@ class Sim:
         self._controllers = controllers
 
 
-    def run(self, sim_params={}, ctl=None, ctl_params={}, keep=True, save=False, close_sim=True):
+    def run(self, sim_params={}, ctl=None, ctl_params={}, ret_data=True, save=False, close_sim=True):
 
         model_params = self._params_cb()
         model_ctl_params, ctl_label = self.get_model_ctl_params(ctl, ctl_params)
@@ -63,23 +63,12 @@ class Sim:
             meta.update( {'ctl': ctl, 'ctl_label': ctl_label} )
         
         sim_data = DataSet(t, data, plecs_header, meta)
-        
-        if keep is True:
-            key = self.get_random_key()
-            self._sim_data[key] = sim_data    
-         
+
         if save:
             save_data(save, sim_data)
-            
-        return key
-
-
-    def get_sim_data(self, key):
-
-        if key not in self._sim_data:
-            raise KeyError('Invalid key.')
-
-        return self._sim_data[key]
+        
+        if ret_data is True:
+            return sim_data
 
 
     def get_model_ctl_params(self, ctl, ctl_params):
@@ -100,17 +89,6 @@ class Sim:
             model_ctl_params.update( self._controllers.get_gains(ctl_params) )
 
         return model_ctl_params, ctl_label
-
-
-    def get_random_key(self):
-
-        while True:
-            key = np.random.randint(2**31)
-            if key in self._sim_data:
-                continue
-            break
-            
-        return key
 
 
 def gen_controllers_params(n_ctl, active_ctl):

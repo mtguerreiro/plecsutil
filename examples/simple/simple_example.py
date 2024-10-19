@@ -26,16 +26,15 @@ sim_params = [
     ]
 
 # Runs simulations (and saves data)
-keys = []
+data = []
 for sp in sim_params:
     fsave = '{:}_{:}'.format('zeta', sp['zeta'])
-    key = sim.run(sp, save=fsave)
-    keys.append(key)
+    d = sim.run(sim_params=sp, save=fsave)
+    data.append(d)
 
 # --- Results ---
 # Plots the results
-for key in keys:
-    data = sim.get_sim_data(key)
-    label = 'zeta = {:}'.format(data.meta['sim_params']['zeta'])
-    plt.plot(data.t, data.data[:, 1], label=label)
+for d in data:
+    label = 'zeta = {:}'.format(d.meta['sim_params']['zeta'])
+    plt.plot(d.t, d.data[:, 1], label=label)
     plt.legend()

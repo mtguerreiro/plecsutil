@@ -27,24 +27,19 @@ sim = pu.ui.Sim(
     controllers=model.CONTROLLERS
     )
 
-# Runs simulations (and saves data)
-keys = []
+# Runs simulations
+data = []
 for cp in ctl_params:
-    key = sim.run(ctl=cp[0], ctl_params=cp[1], close_sim=False)
-    keys.append(key)
+    d = sim.run(ctl=cp[0], ctl_params=cp[1], close_sim=False)
+    data.append(d)
 
 # --- Results ---
-data = []
-for key in keys:
-    data.append( sim.get_sim_data(key) )
-
-# Plots the results
 plt.figure()
 xlim = [0, 10]
 
 ax = plt.subplot(3,1,1)
 for d in data:
-    label = '{:}'.format( d.meta['ctl_params']['label'] )
+    label = '{:}'.format( d.meta['ctl'] )
     plt.plot(d.t / 1e-3, d.data[:, 2], label=label)
 plt.grid()
 plt.ylabel('$u$')
