@@ -23,7 +23,7 @@ sim_params = [
 # Plecs model
 pm = pu.ui.PlecsModel(
     plecs_file, plecs_file_path,
-    model.params,
+    model.params(),
     )
 
 # Runs simulations
@@ -39,8 +39,8 @@ xlim = [0, 20]
 ax = plt.subplot(3,1,1)
 plt.title('Duty-cycle')
 for d in data:
-    RL = d.meta['sim_params']['RL']
-    R_Cout = d.meta['sim_params']['R_Cout']
+    RL = d.meta['model_params']['RL']
+    R_Cout = d.meta['model_params']['R_Cout']
     if np.allclose(RL, 0) and np.allclose(R_Cout, 0):
         label = 'Ideal'
     else:

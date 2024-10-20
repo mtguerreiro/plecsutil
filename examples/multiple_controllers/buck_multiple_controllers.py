@@ -23,7 +23,7 @@ ctl_params = [
 # Plecs model
 pm = pu.ui.PlecsModel(
     plecs_file, plecs_file_path,
-    model.params,
+    model.params(),
     controllers=model.CONTROLLERS
     )
 

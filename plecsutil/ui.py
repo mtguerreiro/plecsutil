@@ -24,12 +24,12 @@ class DataSet:
 
 class PlecsModel:
 
-    def __init__(self, file, file_path, get_model_params, controllers=None):
+    def __init__(self, file, file_path, model_params, controllers=None):
 
         self._file = file
         self._file_path = file_path
         
-        self._get_model_params = get_model_params
+        self._model_params = dict(model_params)
 
         self._sim_data = {}
 
@@ -38,22 +38,24 @@ class PlecsModel:
 
     def sim(self, sim_params={}, ctl=None, ctl_params={}, ret_data=True, save=False, close_sim=True):
 
-        model_params = self._get_model_params()
+        # Creats a user_params dict with new user params
         model_ctl_params, ctl_label = self._get_model_ctl_params(ctl, ctl_params)
         
         user_params = {}
         user_params.update(sim_params)
         user_params.update(model_ctl_params)
 
-        # Updates model params with user params (sim + ctl)
+        # Updates model_params with user params (sim + ctl)
+        model_params = dict(self._model_params)
         for k, v in user_params.items():
             if k not in model_params:
                 raise KeyError('Parameter \'{:}\' not a model parameter'.format(k))
             model_params[k] = v
 
+        # Runs simulation with new model_params
         t, data, plecs_header = pu.pi.sim(self._file, self._file_path, model_params, close=close_sim)
 
-        meta = {'sim_params': model_params, 'ctl_params': ctl_params}
+        meta = {'model_params': model_params, 'ctl_params': ctl_params}
         if ctl is not None:
             meta.update( {'ctl': ctl, 'ctl_label': ctl_label} )
         
