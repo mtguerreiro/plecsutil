@@ -11,8 +11,8 @@ import model
 plt.ion()
 
 # --- Input ---
-pfile = 'buck_param_var'
-pfile_path = os.path.abspath(os.getcwd())
+plecs_file = 'buck_param_var'
+plecs_file_path = os.path.abspath(os.getcwd())
 
 sim_params = [
     {'RL': 0, 'R_Cout': 0},
@@ -20,16 +20,16 @@ sim_params = [
     ]
 
 # --- Sim ---
-# Sim object
-sim = pu.ui.Sim(
-    pfile, pfile_path,
+# Plecs model
+pm = pu.ui.PlecsModel(
+    plecs_file, plecs_file_path,
     model.params,
     )
 
 # Runs simulations
 data = []
 for sp in sim_params:
-    d = sim.run(sim_params=sp)
+    d = pm.sim(sim_params=sp)
     data.append(d)
 
 # --- Results ---

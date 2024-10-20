@@ -1,8 +1,3 @@
-"""
-User interface
-==============
-
-"""
 import plecsutil as pu
 
 import numpy as np
@@ -27,24 +22,24 @@ class DataSet:
     meta : {}
 
 
-class Sim:
+class PlecsModel:
 
-    def __init__(self, pfile, pfile_path, params_cb, controllers=None):
+    def __init__(self, file, file_path, get_model_params, controllers=None):
 
-        self._pfile = pfile
-        self._pfile_path = pfile_path
+        self._file = file
+        self._file_path = file_path
         
-        self._params_cb = params_cb
+        self._get_model_params = get_model_params
 
         self._sim_data = {}
 
         self._controllers = controllers
 
 
-    def run(self, sim_params={}, ctl=None, ctl_params={}, ret_data=True, save=False, close_sim=True):
+    def sim(self, sim_params={}, ctl=None, ctl_params={}, ret_data=True, save=False, close_sim=True):
 
-        model_params = self._params_cb()
-        model_ctl_params, ctl_label = self.get_model_ctl_params(ctl, ctl_params)
+        model_params = self._get_model_params()
+        model_ctl_params, ctl_label = self._get_model_ctl_params(ctl, ctl_params)
         
         user_params = {}
         user_params.update(sim_params)
@@ -56,7 +51,7 @@ class Sim:
                 raise KeyError('Parameter \'{:}\' not a model parameter'.format(k))
             model_params[k] = v
 
-        t, data, plecs_header = pu.pi.sim(self._pfile, self._pfile_path, model_params, close=close_sim)
+        t, data, plecs_header = pu.pi.sim(self._file, self._file_path, model_params, close=close_sim)
 
         meta = {'sim_params': model_params, 'ctl_params': ctl_params}
         if ctl is not None:
@@ -71,7 +66,7 @@ class Sim:
             return sim_data
 
 
-    def get_model_ctl_params(self, ctl, ctl_params):
+    def _get_model_ctl_params(self, ctl, ctl_params):
 
         model_ctl_params = {}
         ctl_label = None

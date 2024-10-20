@@ -11,8 +11,8 @@ import model
 plt.ion()
 
 # --- Input ---
-pfile = 'buck_single_controller'
-pfile_path = os.path.abspath(os.getcwd())
+plecs_file = 'buck_single_controller'
+plecs_file_path = os.path.abspath(os.getcwd())
 
 ctl_params = [
     {'ts': 1e-3, 'os': 5},
@@ -21,9 +21,9 @@ ctl_params = [
     ]
 
 # --- Sim ---
-# Sim object
-sim = pu.ui.Sim(
-    pfile, pfile_path,
+# Plecs model
+pm = pu.ui.PlecsModel(
+    plecs_file, plecs_file_path,
     model.params,
     controllers=model.CONTROLLERS
     )
@@ -31,7 +31,7 @@ sim = pu.ui.Sim(
 # Runs simulations
 data = []
 for cp in ctl_params:
-    d = sim.run(ctl_params=cp, close_sim=False)
+    d = pm.sim(ctl_params=cp, close_sim=False)
     data.append(d)
 
 # --- Results ---
