@@ -2,3 +2,4 @@ plecsutil.egg-info
 *__pycache__/
 *.zip
 *.m
+*build/

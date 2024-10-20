@@ -16,9 +16,18 @@ class Controller:
 
 @dataclass
 class DataSet:
+    """Data generated from a PLECS simulation."""
+
+    #: N-size vector with time steps of the simulation
     t : np.ndarray
+
+    #: (N, M) matrix containing the signals connected to the output data ports
     data : np.ndarray
+
+    #: PLECS info (version, time and date of simulation)
     source : str
+
+    #: A dictionary containing model and controller paramaters used to run the simulation.
     meta : {}
 
 
@@ -55,7 +64,9 @@ class PlecsModel:
         # Runs simulation with new model_params
         t, data, plecs_header = pu.pi.sim(self._file, self._file_path, model_params, close=close_sim)
 
-        meta = {'model_params': model_params, 'ctl_params': ctl_params}
+        meta = {'model_params': model_params}
+        if ctl_params:
+            meta.update( {'ctl_params': ctl_params} )
         if ctl is not None:
             meta.update( {'ctl': ctl, 'ctl_label': ctl_label} )
         
