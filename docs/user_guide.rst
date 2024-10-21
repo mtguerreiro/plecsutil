@@ -97,3 +97,54 @@ Now, ``model.py`` can be imported by Python scripts to get the model parameters.
    :caption: Using ``model.py`` to run simulations (:download:`download source <media/user_guide/intro/buck_intro_model.py>`)
    :language: python
 
+
+Working with controllers
+========================
+
+It is often interesting to see how a closed-loop system behaves, especially when changing controller parameters. There are also case where we have more than one controller and would like to compare them. ``plecsutil`` provides a way to define controllers as part of the model, and vary their parameters. 
+
+Single controller
+-----------------
+
+When the model has a single controller, changing the parameters of the controller can be done much in the same way as changing the parameters of the model. After all, the controller is part of the model. However, it is often the case that we don't want to specify the controller gains directly, but rather through some other specifications. For example, we may have a design method, where we specify the settling time of the controller to get the gains. Then, it is a question of concatenating the parameters of the plant with the parameters of the controller, in order to create a single dictionary with all parameters of the model. 
+
+
+Consider state-feedback controller for a Buck converter shown in :numref:`fig-user-guide-controllers-sfb-buck`. This controller has two parameters, which are part of the model parameters: the vector ``Kx`` and the gain ``Ke``. 
+
+.. figure:: media/user_guide/controllers/single/images/sfb_controller.svg
+   :name: fig-user-guide-controllers-sfb-buck
+   :scale: 85%
+   :align: center
+   :alt: State-feedback controller for a buck converter.
+   
+   State-feedback controller for a Buck converter.
+
+
+These two gains can be determined based on time response specifications of the closed-loop system, such as settling time and overshoot. This is possible with pole placement, based on a model of the converter. 
+
+Now, we can identify two sets of parameters: the plant parameters, and the controller parameters. These two combined compose the model parameters. In our ``model.py`` file, we can then create three functions: one for the parameters of the plant, one for the parameters of the controller, and one that concatenates them. An example of such structure is shown in the script below.
+
+.. literalinclude:: media/user_guide/controllers/single/model.py
+   :caption: ``model.py`` with plant, controller and model parameters (:download:`download source <media/user_guide/controllers/single/model.py>`)
+   :language: python
+
+Note that the ``controller_gains`` gain function takes as argument a dictionary, which contains the parameters of the controller. In this case, the parameters are ``ts`` (settling time) and ``os`` (overshoot). The function also returns a dictionary, containing the gains that are used in the model.
+
+When there is a  controller, ``plecsutil`` is made aware of it by informing the function that returns the controller gains when creating the :class:`plecsutil.ui.PlecsModel` object. When running the simulation, the user can set the parameters of the controller and pass them to :meth:`plecsutil.ui.PlecsModel.sim`. Internally,  ``plecsutil`` calls the function to get the gains, and updates the parameters of the model automatically. This is demonstrated in the script below.
+
+.. literalinclude:: media/user_guide/controllers/single/buck_single_controller.py
+   :caption: Running a simulation with a single controller (:download:`download source <media/user_guide/controllers/single/buck_single_controller.py>` and :download:`PLECS model <media/user_guide/controllers/single/buck_single_controller.plecs>`)
+   :language: python
+
+Note that :meth:`plecsutil.ui.PlecsModel.sim` is called with ``ctl_params`` set to ``{'ts': 2.5e-3, 'os': 5}``. These parameters are used to generate the controller gains, which in turn are updated in the model parameters file.
+
+Now, running the simulation with different controller parameters is just a matter of calling :meth:`plecsutil.ui.PlecsModel.sim` with different control parameters. An example is demonstrated in the script below.
+
+.. literalinclude:: media/user_guide/controllers/single/buck_single_controller_var_params.py
+   :caption: Running a simulation with different controller parameters (:download:`download source <media/user_guide/controllers/single/buck_single_controller_var_params.py>`)
+   :language: python
+
+
+Multiple controllers
+--------------------
+

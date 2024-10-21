@@ -33,7 +33,7 @@ class DataSet:
 
 class PlecsModel:
 
-    def __init__(self, file, file_path, model_params, controllers=None):
+    def __init__(self, file, file_path, model_params, get_ctl_gains=None, controllers=None):
 
         self._file = file
         self._file_path = file_path
@@ -42,19 +42,20 @@ class PlecsModel:
 
         self._sim_data = {}
 
+        self._get_ctl_gains = get_ctl_gains
         self._controllers = controllers
 
 
     def sim(self, sim_params={}, ctl=None, ctl_params={}, ret_data=True, save=False, close_sim=True):
 
-        # Creats a user_params dict with new user params
         model_ctl_params, ctl_label = self._get_model_ctl_params(ctl, ctl_params)
-        
+
+        # Creats a user_params dict with new sim and ctl params        
         user_params = {}
         user_params.update(sim_params)
         user_params.update(model_ctl_params)
 
-        # Updates model_params with user params (sim + ctl)
+        # Updates model_params with user params
         model_params = dict(self._model_params)
         for k, v in user_params.items():
             if k not in model_params:
@@ -93,8 +94,12 @@ class PlecsModel:
             ctl_gains = self._controllers[ctl].get_gains(ctl_params)
             model_ctl_params.update( ctl_gains )
             ctl_label = self._controllers[ctl].label
+            
         elif ctl_params:
-            model_ctl_params.update( self._controllers.get_gains(ctl_params) )
+            if type(self._controllers) is Controller:
+                model_ctl_params.update( self._controllers.get_gains(ctl_params) )
+            else:
+                model_ctl_params.update( self._get_ctl_gains(ctl_params) )
 
         return model_ctl_params, ctl_label
 
