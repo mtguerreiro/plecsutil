@@ -6,13 +6,12 @@
 User guide
 ==========
 
-Image about the structure
 
 Introduction
-============
+------------
 
 Creating the PLECS model
-------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~
 
 To work with ``plecsutil``, the PLECS model needs at least two elements: an output data port in the top-level circuit, and a link to the ``.m`` file containing the model parameters. 
 
@@ -39,7 +38,7 @@ The link to the ``.m`` file is given in the initialization tab of the simulation
 
 
 Creating the Python script
---------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Running the PLECS simulation requires creating a :class:`plecsutil.ui.PlecsModel` object informing the name of the PLECS model, its path, and a Python dictionary containing all of the parameters of the model.
 
@@ -53,13 +52,13 @@ In this example, when calling :meth:`plecsutil.ui.PlecsModel.sim` to run the sim
 
 
 Simulation results
-------------------
+~~~~~~~~~~~~~~~~~~
 
 After running a simulation, :meth:`plecsutil.ui.PlecsModel.sim` returns a :class:`plecsutil.ui.DataSet` dataclass holding the simulation results. In addition to the data points, :class:`plecsutil.ui.DataSet` contains a ``meta`` field. This field has  a dictionary with a ``model_params`` entry that  stores the  model parameters used to produce the associated simulation results. Thus, the simulation results are always saved with the parameters used to produce them.
 
 
 Running simulations with different model parameters
----------------------------------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 The :meth:`plecsutil.ui.PlecsModel.sim` accepts a ``sim_params`` dictionary that can be used to overwrite the default model parameters defined when initializing the :class:`plecsutil.ui.PlecsModel` object. The ``sim_params`` dictionary doesn't need to contain all model parameters, but just the parameters to be overwritten. In the example Python script shown above, calling :meth:`plecsutil.ui.PlecsModel.sim` as
 
@@ -77,7 +76,7 @@ An example of running the simulation of the Buck converter with different ``R`` 
 
 
 The ``model.py`` file
-----------------------
+~~~~~~~~~~~~~~~~~~~~~
 
 In the previous examples, the dictionary containing the model parameters (``model_params``) was defined in the script that runs the simulation. This makes managing the model parameters more difficult when there are multiple Python scripts to perform different simulations of the same model. In the Buck model used as example, one might create one script to run the model with different values for ``R``, and another one for different values of ``f_pwm``. If the parameters of the PLECS model need to be updated, all scripts need to be modified to include the new parameters.
 
@@ -99,12 +98,12 @@ Now, ``model.py`` can be imported by Python scripts to get the model parameters.
 
 
 Working with controllers
-========================
+------------------------
 
 It is often interesting to see how a closed-loop system behaves, especially when changing controller parameters. There are also case where we have more than one controller and would like to compare them. ``plecsutil`` provides a way to define controllers as part of the model, and vary their parameters. 
 
 Single controller
------------------
+~~~~~~~~~~~~~~~~~
 
 When the model has a single controller, changing the parameters of the controller can be done much in the same way as changing the parameters of the model. After all, the controller is part of the model. However, it is often the case that we don't want to specify the controller gains directly, but rather through some other specifications. For example, we may have a design method, where we specify the settling time of the controller to get the gains. Then, it is a question of concatenating the parameters of the plant with the parameters of the controller, in order to create a single dictionary with all parameters of the model. 
 
@@ -146,7 +145,7 @@ Now, running the simulation with different controller parameters is just a matte
 
 
 Multiple controllers
---------------------
+~~~~~~~~~~~~~~~~~~~~
 
 There are many cases where we would like to have multiple controllers in the model, so that we can easily compare them. This case is also supported in ``plecsutil``, by following a couple of rules in the PLECS model, and by defining the controllers as an :class:`plecsutil.ui.Controller` object. 
 

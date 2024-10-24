@@ -1,6 +1,6 @@
 """
 Introduction
-============
+------------
 
 Helping automating PLECS simulations with Python.
 	
