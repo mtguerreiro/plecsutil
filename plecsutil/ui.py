@@ -9,7 +9,7 @@ import zipfile
 
 @dataclass
 class Controller:
-    ctl_id : int = 1
+    port : int = 1
     get_gains : callable = None
     label : str = ''
 
@@ -87,7 +87,7 @@ class PlecsModel:
         
         if ctl:
             n_ctl = len(self._controllers)
-            active_ctl = self._controllers[ctl].ctl_id
+            active_ctl = self._controllers[ctl].port
             c_params = gen_controllers_params(n_ctl, active_ctl)
             model_ctl_params.update( c_params )
 
