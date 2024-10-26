@@ -1,8 +1,3 @@
-import numpy as np
-import scipy.signal
-
-import plecsutil as pu
-
 def params():
 
     V_in = 20
@@ -19,20 +14,20 @@ def params():
     R = 10
     Rd = 10
 
-    params = {}
-    params['L'] = L
-    params['RL'] = RL
+    _params = {}
+    _params['L'] = L
+    _params['RL'] = RL
     
-    params['C_out'] = C_out
-    params['R_Cout'] = R_Cout
+    _params['C_out'] = C_out
+    _params['R_Cout'] = R_Cout
 
-    params['R'] = R
+    _params['R'] = R
 
-    params['V_in'] = V_in
-    params['Vo_ref'] = Vo_ref
+    _params['V_in'] = V_in
+    _params['Vo_ref'] = Vo_ref
     
-    params['f_pwm'] = 100e3
+    _params['f_pwm'] = 100e3
 
-    return params
+    return _params
 
 

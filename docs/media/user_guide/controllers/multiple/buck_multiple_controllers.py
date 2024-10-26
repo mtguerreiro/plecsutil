@@ -23,7 +23,7 @@ pm = pu.ui.PlecsModel(
     )
 
 # Runs simulations
-d1 = pm.sim(ctl='sfb', ctl_params={'ts':1.5e-3, 'os':5})
+d1 = pm.sim(ctl='sfb', ctl_params={'ts':1.5e-3, 'os':5}, save='tst')
 d2 = pm.sim(ctl='casc', ctl_params={'ts_v':1.5e-3, 'os_v':5, 'ts_i':0.15e-3, 'os_i':5})
 data  = [d1, d2]
 

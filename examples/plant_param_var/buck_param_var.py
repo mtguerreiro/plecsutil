@@ -1,13 +1,10 @@
 import os
+
 import plecsutil as pu
-
-import numpy as np
-
-import matplotlib
-import matplotlib.pyplot as plt
-
 import model
 
+import numpy as np
+import matplotlib.pyplot as plt
 plt.ion()
 
 # --- Input ---

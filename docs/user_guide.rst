@@ -1,11 +1,16 @@
-.. plecsutil documentation master file, created by
-   sphinx-quickstart on Sun Oct 20 09:48:45 2024.
-   You can adapt this file completely to your liking, but it should at least
-   contain the root `toctree` directive.
-
 User guide
 ==========
 
+This page shows how to build PLECS models and Python scripts so that simulations can be automated with ``plecsutil``. 
+
+* :ref:`sec-user-guide-intro`: basics to create PLECS models, the ``model.py`` files, and running the simulation with ``plecsutil``
+
+* :ref:`sec-user-guide-working-controllers`: basics to create PLECS models with single or multiple controllers
+
+* :ref:`sec-user-guide-save-load`: Saving and loading simulation results
+
+
+.. _sec-user-guide-intro:
 
 Introduction
 ------------
@@ -97,6 +102,8 @@ Now, ``model.py`` can be imported by Python scripts to get the model parameters.
    :language: python
 
 
+.. _sec-user-guide-working-controllers:
+
 Working with controllers
 ------------------------
 
@@ -176,4 +183,29 @@ Now, we can finally build the script to run the simulations with different contr
    :caption: ``model.py`` file for multiple controllers (:download:`download source <media/user_guide/controllers/multiple/buck_multiple_controllers.py>`)
    :language: python
 
+
+.. _sec-user-guide-save-load:
+
+Saving and loading simulation results
+-------------------------------------
+
+With ``plecsutil``, it is possible to save and load simulations results. When calling :meth:`plecsutil.ui.PlecsModel.sim` to run a simulation, it is possible to automatically save the results after a simulation finishes by setting ``save`` to a nonempty string. For example, running
+
+.. code-block:: python
+   
+   pm.sim(ctl='sfb', ctl_params={'ts':1.5e-3, 'os':5}, save='sfb_sim_results', ret_data=False)
+
+will save the simulation results in a file called ``sfb_sim_results.zip``. The data is saved as a :class:`plecsutil.ui.DataSet` object, which includes simulation and meta data, such as model and controller parameters. 
+
+Data is loaded with :func:`plecsutil.ui.load_data`:
+
+.. code-block:: python
+   
+   data = pu.ui.load_data('sfb_sim_results')
+
+``data`` is a :class:`plecsutil.ui.DataSet` object, and can be handled exactly in the same way as simulation results returned by :meth:`plecsutil.ui.PlecsModel.sim`.
+
+.. warning::
+   
+   ``plecsutil`` uses `pickle <https://docs.python.org/3/library/pickle.html>`_ under the hood for serializing and de-serializing the simulation results. This is simple and efficient, but is not safe for file sharing. Only load simulation data that you generated yourself, or that you trust the source. 
 

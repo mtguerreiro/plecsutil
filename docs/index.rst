@@ -8,12 +8,6 @@ plecsutil documentation
 
 ``plecsutil`` is a tool to help automating PLECS simulations with Python.
 
-.. Getting started
-.. Examples
-.. plecsutil
-
-
-
 .. toctree::
    :maxdepth: 2
    :caption: Contents:

@@ -6,18 +6,18 @@ import plecsutil as pu
 def params():
 
     # Plant parameters
-    plant_params = get_plant_params()
+    _plant_params = plant_params()
 
     # Control parameters
     ts = 2e-3
     os = 5
 
-    sfb_params = sfb_get_gains({'ts':ts, 'os':os})
-    casc_params = cascaded_get_gains({'ts':ts, 'os':os})
+    _sfb_params = sfb_get_gains({'ts':ts, 'os':os})
+    _casc_params = cascaded_get_gains({'ts':ts, 'os':os})
 
     ctl_params = {}
-    ctl_params.update(sfb_params)
-    ctl_params.update(casc_params)
+    ctl_params.update( _sfb_params )
+    ctl_params.update( _casc_params )
 
     # List of controllers
     n_ctl = len(CONTROLLERS)
@@ -26,14 +26,14 @@ def params():
 
     # Params for plecs
     params = {}
-    params.update(plant_params)
-    params.update(ctl_params)
-    params.update(l_ctl)
+    params.update( _plant_params )
+    params.update( ctl_params )
+    params.update( l_ctl )
     
     return params
 
 
-def get_plant_params():
+def plant_params():
 
     V_in = 20
     Vo_ref = 10
@@ -46,18 +46,18 @@ def get_plant_params():
     R = 10
     Rd = 10
 
-    params = {}
-    params['L'] = L
-    params['C_out'] = C_out
-    params['R'] = R
-    params['Rd'] = Rd
+    _params = {}
+    _params['L'] = L
+    _params['C_out'] = C_out
+    _params['R'] = R
+    _params['Rd'] = Rd
 
-    params['V_in'] = V_in
-    params['Vo_ref'] = Vo_ref
+    _params['V_in'] = V_in
+    _params['Vo_ref'] = Vo_ref
     
-    params['f_pwm'] = 100e3
+    _params['f_pwm'] = 100e3
 
-    return params
+    return _params
 
 
 def sfb_get_gains(ctl_params):
@@ -65,11 +65,11 @@ def sfb_get_gains(ctl_params):
     ts = ctl_params['ts']
     os = ctl_params['os']
 
-    sys_params = get_plant_params()
-    R = sys_params['R']
-    L = sys_params['L']
-    C = sys_params['C_out']
-    V_in = sys_params['V_in']
+    _plant_params = plant_params()
+    R = _plant_params['R']
+    L = _plant_params['L']
+    C = _plant_params['C_out']
+    V_in = _plant_params['V_in']
     
     A = np.array([
         [0,       -1 / L],
@@ -106,11 +106,11 @@ def sfb_get_gains(ctl_params):
 
 def cascaded_get_gains(ctl_params):
 
-    sys_params = get_plant_params()
-    R = sys_params['R']
-    L = sys_params['L']
-    C = sys_params['C_out']
-    V_in = sys_params['V_in']
+    _plant_params = plant_params()
+    R = _plant_params['R']
+    L = _plant_params['L']
+    C = _plant_params['C_out']
+    V_in = _plant_params['V_in']
 
     ts_v = ctl_params['ts']
     os_v = ctl_params['os']
@@ -126,9 +126,9 @@ def cascaded_get_gains(ctl_params):
     kv = ( C ) * ( 2 * zeta_v * wn_v - 1 / R / C )
     k_ev = ( C ) * ( - wn_v**2 )
 
-    params = {'ki': ki, 'k_ei': k_ei, 'kv': kv, 'k_ev':k_ev}
+    _params = {'ki': ki, 'k_ei': k_ei, 'kv': kv, 'k_ev':k_ev}
 
-    return params
+    return _params
 
 
 def _zeta_wn(ts, os):
@@ -140,8 +140,6 @@ def _zeta_wn(ts, os):
 
 
 CONTROLLERS = {
-    'sfb':  pu.ui.Controller(1, sfb_get_gains, label='State feedback'),
-    'casc': pu.ui.Controller(2, cascaded_get_gains, label='Cascaded')
+    'sfb' : pu.ui.Controller(port=1, get_gains=sfb_get_gains, label='State feedback'),
+    'casc': pu.ui.Controller(port=2, get_gains=cascaded_get_gains, label='Cascaded')
 }
-
-

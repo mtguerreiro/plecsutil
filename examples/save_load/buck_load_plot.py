@@ -1,34 +1,15 @@
-import os
-
 import plecsutil as pu
-import model
 
 import matplotlib.pyplot as plt
 plt.ion()
 
 # --- Input ---
-plecs_file = 'buck_single_controller'
-plecs_file_path = os.path.abspath(os.getcwd())
+files = ['sim_1', 'sim_2', 'sim_3']
 
-ctl_params = [
-    {'ts': 1e-3, 'os': 5},
-    {'ts': 3e-3, 'os': 5},
-    {'ts': 5e-3, 'os': 5}
-    ]
-
-# --- Sim ---
-# Plecs model
-pm = pu.ui.PlecsModel(
-    plecs_file, plecs_file_path,
-    model.params(),
-    get_ctl_gains=model.controller_gains
-    )
-
-# Runs simulations
+# --- Loads results ---
 data = []
-for cp in ctl_params:
-    d = pm.sim(ctl_params=cp, close_sim=False)
-    data.append(d)
+for f in files:
+    data.append( pu.ui.load_data(f) )
 
 # --- Results ---
 plt.figure()

@@ -18,13 +18,13 @@ class Controller:
 class DataSet:
     """Data generated from a PLECS simulation."""
 
-    #: N-size vector with time steps of the simulation
+    #: N-size vector with time steps of the simulation.
     t : np.ndarray
 
-    #: (N, M) matrix containing the signals connected to the output data ports
+    #: (N, M) matrix containing the signals connected to the output data ports.
     data : np.ndarray
 
-    #: PLECS info (version, time and date of simulation)
+    #: PLECS info (version, time and date of simulation).
     source : str
 
     #: A dictionary containing model and controller paramaters used to run the simulation.
