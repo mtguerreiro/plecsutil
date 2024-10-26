@@ -9,8 +9,16 @@ import zipfile
 
 @dataclass
 class Controller:
+
+    #: Port of the multiport switch that the controller is connected to.
     port : int = 1
+
+    #: Callback to get the gains of the controller that are used in the model.
+    #: The function should take a dictionary as argument, and return a
+    #: dictionary.
     get_gains : callable = None
+
+    #: A label for the controller. 
     label : str = ''
 
 
@@ -27,7 +35,8 @@ class DataSet:
     #: PLECS info (version, time and date of simulation).
     source : str
 
-    #: A dictionary containing model and controller paramaters used to run the simulation.
+    #: A dictionary containing model and controller paramaters used to run the
+    #: simulation.
     meta : {}
 
 
@@ -117,7 +126,22 @@ def gen_controllers_params(n_ctl, active_ctl):
 
 
 def load_data(file):
+    """Loads simulation data from a zipped file.
 
+    The file must have been saved using :func:`save_data`, otherwise there will
+    be errors when attempting to load the data.
+    
+    Parameters
+    ----------
+    file : str
+        Name of the file, without `.zip`. Must include the full or relative path
+        if `file` is in a different directory.
+
+    Returns
+    -------
+    data : :class:`DataSet`
+
+    """
     with zipfile.ZipFile(file + '.zip', 'r') as zipf:
         data_bytes = zipf.read('DataSet')
 
@@ -127,6 +151,16 @@ def load_data(file):
 
 
 def save_data(file, data):
+    """Saves simulation data in a zipped file.
 
+    Parameters
+    ----------
+    file : str
+        Name of the file. The name can contain a relative or full path.
+
+    data : :class:`DataSet`
+        Simulation data.
+
+    """
     with zipfile.ZipFile(file + '.zip', 'w', compression=zipfile.ZIP_LZMA) as zipf:
         zipf.writestr('DataSet', pickle.dumps(data))
