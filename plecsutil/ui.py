@@ -9,13 +9,14 @@ import zipfile
 
 @dataclass
 class Controller:
+    """A class to represent multiple controllers in a PLECS model."""
 
     #: Port of the multiport switch that the controller is connected to.
     port : int = 1
 
     #: Callback to get the gains of the controller that are used in the model.
-    #: The function should take a dictionary as argument, and return a
-    #: dictionary.
+    #: The function should take a dictionary with the controller parameters as
+    #: argument, and return a dictionary with the model parameters.
     get_gains : callable = None
 
     #: A label for the controller. 
@@ -24,7 +25,7 @@ class Controller:
 
 @dataclass
 class DataSet:
-    """Data generated from a PLECS simulation."""
+    """A dataclass to hold data generated from a PLECS simulation."""
 
     #: N-size vector with time steps of the simulation.
     t : np.ndarray
@@ -36,12 +37,51 @@ class DataSet:
     source : str
 
     #: A dictionary containing model and controller paramaters used to run the
-    #: simulation.
+    #: simulation. The dictionary always contain the following key:
+    #:
+    #: * ``model_params``: The dictionary with the model parameters used in the
+    #:   simulation.
+    #:
+    #: The dictionary may contain the following keys, if they are specified
+    #: when running a simulation:
+    #:
+    #: * ``ctl``: Controller used in the simulation. Only for models with
+    #:   multiple controllers.  
+    #: * ``ctl_params``: Parameters used to generate the gains/parameters of the
+    #:   controller.
+    #: * ``ctl_label``: :attr:`Controller.label` of controller used for the
+    #:   simulation.
     meta : {}
 
 
 class PlecsModel:
+    """A class representing a PLECS  model.
 
+    :class:`PlecsModel` provides a framework to set up and run simulations,
+    and manage parameters of the model and its controllers.
+
+    Parameters
+    ----------
+    file : str
+        The filename of the model (without the ``.plecs`` extension).
+    
+    file_path : str
+        The path to the directory containing the model file.
+
+    model_params : dict
+        A dictionary of model parameters for the simulation. These parameters 
+        are used to initialize the model and can be overridden by
+        simulation-specific parameters when running simulations.
+
+    get_ctl_gains : callable, optional
+        A function for retrieving control gains for the model's controller.
+        Only relevant if the model has a single controller.
+
+    controllers : :class:`Controller`, optional
+        An object representingthe  controllers of the model. Only relevant for
+        models with multiple controllers.
+    
+    """
     def __init__(self, file, file_path, model_params, get_ctl_gains=None, controllers=None):
 
         self._file = file
@@ -56,7 +96,51 @@ class PlecsModel:
 
 
     def sim(self, sim_params={}, ctl=None, ctl_params={}, ret_data=True, save=False, close_sim=True):
+        """Runs the PLECS simulation with specified parameters and returns the
+        simulation data.
 
+        Parameters
+        ----------
+        sim_params : dict, optional
+            Dictionary of simulation parameters to override the model's default
+            parameters. If not set, the simulation is executed with the default
+            parameters.
+
+        ctl : NoneType or str, optional
+            Sets the controller to be enabled in the simulation, in case of
+            models with multiple controllers. If not set, the simulation runs
+            with the default controller and its parameters (if there are any).
+
+        ctl_params : dict, optional
+            Controller parameters, in case of model with one or more
+            controllers. If not set, the default controller parameters are used
+            for the simulation (if there is one).
+
+        ret_data : bool, optional
+            Whether to return the simulation. Default is `True`.
+
+        save : bool or str, optional
+            Specifies whether to save the simulation data. If `False`, the data
+            is not saved. If a string is provided, it will be used as the
+            filename to save the data. Default is `False`.
+
+        close_sim : bool, optional
+            Whether to close PLECS after running the simulation. Default is
+            `True`.
+
+        Returns
+        -------
+        :class:`DataSet`
+            A :class:`DataSet` object containing the simulation data. Returned
+            only if `ret_data` is set to `True`.
+
+        Raises
+        ------
+        KeyError
+            If any parameter in ``sim_params`` or ``ctl_params`` does not exist
+            in the default model parameters, ``KeyError`` is raised.
+
+        """
         model_ctl_params, ctl_label = self._get_model_ctl_params(ctl, ctl_params)
 
         # Creats a user_params dict with new sim and ctl params        
@@ -114,7 +198,23 @@ class PlecsModel:
 
 
 def gen_controllers_params(n_ctl, active_ctl):
+    """
+    Generates the logic to set controllers in models with multiple controllers.
 
+    Parameters
+    ----------
+    n_ctl : int
+        The total number of controllers.
+
+    active_ctl : int
+        The index of the active controller to be enabled in the simulation.
+
+    Returns
+    -------
+    dict
+        Logic for the ``.m`` file as a dictionary.
+
+    """
     ctls_params = {
         'N_CTL': n_ctl,
         'CTL_SEL': active_ctl,
@@ -128,18 +228,16 @@ def gen_controllers_params(n_ctl, active_ctl):
 def load_data(file):
     """Loads simulation data from a zipped file.
 
-    The file must have been saved using :func:`save_data`, otherwise there will
-    be errors when attempting to load the data.
-    
     Parameters
     ----------
     file : str
-        Name of the file, without `.zip`. Must include the full or relative path
-        if `file` is in a different directory.
+        Name of the file, without ``.zip``. Must include the full or relative
+        path if ``file`` is in a different directory.
 
     Returns
     -------
     data : :class:`DataSet`
+        Data loaded from the specified file.
 
     """
     with zipfile.ZipFile(file + '.zip', 'r') as zipf:
@@ -151,12 +249,13 @@ def load_data(file):
 
 
 def save_data(file, data):
-    """Saves simulation data in a zipped file.
+    """Saves simulation data to a zipped file.
 
     Parameters
     ----------
     file : str
-        Name of the file. The name can contain a relative or full path.
+        Name of the file (without the ``.zip`` extension). The name can contain
+        a relative or full path.
 
     data : :class:`DataSet`
         Simulation data.

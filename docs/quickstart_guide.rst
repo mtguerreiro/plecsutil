@@ -24,3 +24,8 @@ Examples
 --------
 
 Try ``plecsutil`` with the examples provided in the `examples page <https://github.com/mtguerreiro/plecsutil/tree/main/examples>`_. The examples show how to run PLECS simulations with different model parameters, multiple controllers, and how to save and load simulation results.
+
+.. note::
+   
+   Don't forget to enable the RPC interface in PLECS before running the examples, otherwise Python will not be able to connect with PLECS. To do so, open PLECS preferences, and in the "General" tab, make sure the "RPC interface" option is ticked, and the port is 1080.
+
