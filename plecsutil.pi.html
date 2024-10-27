@@ -48,9 +48,14 @@
 <li class="toctree-l1"><a class="reference internal" href="quickstart_guide.html">Quickstart guide</a></li>
 <li class="toctree-l1"><a class="reference internal" href="user_guide.html">User guide</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="plecsutil.html">plecsutil package</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="plecsutil.html#introduction">Introduction</a></li>
 <li class="toctree-l2 current"><a class="reference internal" href="plecsutil.html#submodules">Submodules</a><ul class="current">
 <li class="toctree-l3"><a class="reference internal" href="plecsutil.ui.html">plecsutil.ui</a></li>
-<li class="toctree-l3 current"><a class="current reference internal" href="#">plecsutil.pi</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">plecsutil.pi</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#plecsutil.pi.gen_m"><code class="docutils literal notranslate"><span class="pre">gen_m()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#plecsutil.pi.sim"><code class="docutils literal notranslate"><span class="pre">sim()</span></code></a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -82,8 +87,59 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="plecsutil-pi">
-<h1>plecsutil.pi<a class="headerlink" href="#plecsutil-pi" title="Permalink to this heading"></a></h1>
+  <section id="module-plecsutil.pi">
+<span id="plecsutil-pi"></span><h1>plecsutil.pi<a class="headerlink" href="#module-plecsutil.pi" title="Permalink to this heading"></a></h1>
+<dl class="py function">
+<dt class="sig sig-object py" id="plecsutil.pi.gen_m">
+<span class="sig-prename descclassname"><span class="pre">plecsutil.pi.</span></span><span class="sig-name descname"><span class="pre">gen_m</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">file_path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">params</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#plecsutil.pi.gen_m" title="Permalink to this definition"></a></dt>
+<dd><p>Generates the <code class="docutils literal notranslate"><span class="pre">.m</span></code> file containing all model parameters required for the
+simulation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>file</strong> (<em>str</em>) – Name of the PLECS model file (without path and <cite>.plecs</cite> extension).
+The <code class="docutils literal notranslate"><span class="pre">.m</span></code> file is created with the same name as the PLECS model.</p></li>
+<li><p><strong>file_path</strong> (<em>str</em>) – Path to the directory where the <code class="docutils literal notranslate"><span class="pre">.m</span></code> file will be saved.</p></li>
+<li><p><strong>sim_params</strong> (<em>dict</em>) – Dictionary with model parameters for the simulation.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="plecsutil.pi.sim">
+<span class="sig-prename descclassname"><span class="pre">plecsutil.pi.</span></span><span class="sig-name descname"><span class="pre">sim</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">file_path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sim_params</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">close</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#plecsutil.pi.sim" title="Permalink to this definition"></a></dt>
+<dd><p>Simulates a PLECS model.</p>
+<p>Before running the simulation, <code class="docutils literal notranslate"><span class="pre">sim_params</span></code> is used to create a <code class="docutils literal notranslate"><span class="pre">.m</span></code>
+file containing the parameters of the model.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>file</strong> (<em>str</em>) – The filename of the model (without path and the <code class="docutils literal notranslate"><span class="pre">.plecs</span></code> extension).</p></li>
+<li><p><strong>file_path</strong> (<em>str</em>) – The path to the directory containing the model file.</p></li>
+<li><p><strong>sim_params</strong> (<em>dict</em>) – A dictionary with the model parameters for the simulation. This
+dictionary must contain all parameters required by the model. The
+dictionary should contain only float, int or numpy arrays as values.</p></li>
+<li><p><strong>close</strong> (<em>bool</em><em>, </em><em>optional</em>) – Whether to close PLECS after running the simulation. Default is <cite>True</cite>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><dl class="simple">
+<dt>A tuple containing:</dt><dd><ul class="simple">
+<li><p>t (N-size numpy.ndarray): Simulation time vector.</p></li>
+<li><p>sim_data ((N, M) numpy.ndarray): Array of simulation data values.</p></li>
+<li><p>plecs_header (str): Header information from the PLECS output file.</p></li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>tuple</p>
+</dd>
+</dl>
+</dd></dl>
+
 </section>
 
 
@@ -96,7 +152,7 @@
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2024, Marco Guerreiro.</p>
+    <p>&#169; Copyright 2024, plecsutil developers.</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a

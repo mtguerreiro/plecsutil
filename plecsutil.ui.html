@@ -49,8 +49,17 @@
 <li class="toctree-l1"><a class="reference internal" href="quickstart_guide.html">Quickstart guide</a></li>
 <li class="toctree-l1"><a class="reference internal" href="user_guide.html">User guide</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="plecsutil.html">plecsutil package</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="plecsutil.html#introduction">Introduction</a></li>
 <li class="toctree-l2 current"><a class="reference internal" href="plecsutil.html#submodules">Submodules</a><ul class="current">
-<li class="toctree-l3 current"><a class="current reference internal" href="#">plecsutil.ui</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">plecsutil.ui</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#plecsutil.ui.Controller"><code class="docutils literal notranslate"><span class="pre">Controller</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#plecsutil.ui.DataSet"><code class="docutils literal notranslate"><span class="pre">DataSet</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#plecsutil.ui.PlecsModel"><code class="docutils literal notranslate"><span class="pre">PlecsModel</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#plecsutil.ui.gen_controllers_params"><code class="docutils literal notranslate"><span class="pre">gen_controllers_params()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#plecsutil.ui.load_data"><code class="docutils literal notranslate"><span class="pre">load_data()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#plecsutil.ui.save_data"><code class="docutils literal notranslate"><span class="pre">save_data()</span></code></a></li>
+</ul>
+</li>
 <li class="toctree-l3"><a class="reference internal" href="plecsutil.pi.html">plecsutil.pi</a></li>
 </ul>
 </li>
@@ -83,8 +92,197 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="plecsutil-ui">
-<h1>plecsutil.ui<a class="headerlink" href="#plecsutil-ui" title="Permalink to this heading"></a></h1>
+  <section id="module-plecsutil.ui">
+<span id="plecsutil-ui"></span><h1>plecsutil.ui<a class="headerlink" href="#module-plecsutil.ui" title="Permalink to this heading"></a></h1>
+<dl class="py class">
+<dt class="sig sig-object py" id="plecsutil.ui.Controller">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">plecsutil.ui.</span></span><span class="sig-name descname"><span class="pre">Controller</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">port</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">get_gains</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">callable</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">label</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">''</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#plecsutil.ui.Controller" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>A class to represent multiple controllers in a PLECS model.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="plecsutil.ui.Controller.get_gains">
+<span class="sig-name descname"><span class="pre">get_gains</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">callable</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#plecsutil.ui.Controller.get_gains" title="Permalink to this definition"></a></dt>
+<dd><p>Callback to get the gains of the controller that are used in the model.
+The function should take a dictionary with the controller parameters as
+argument, and return a dictionary with the model parameters.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="plecsutil.ui.Controller.label">
+<span class="sig-name descname"><span class="pre">label</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">''</span></em><a class="headerlink" href="#plecsutil.ui.Controller.label" title="Permalink to this definition"></a></dt>
+<dd><p>A label for the controller.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="plecsutil.ui.Controller.port">
+<span class="sig-name descname"><span class="pre">port</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">1</span></em><a class="headerlink" href="#plecsutil.ui.Controller.port" title="Permalink to this definition"></a></dt>
+<dd><p>Port of the multiport switch that the controller is connected to.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="plecsutil.ui.DataSet">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">plecsutil.ui.</span></span><span class="sig-name descname"><span class="pre">DataSet</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">t</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">source</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">meta</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">{}</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#plecsutil.ui.DataSet" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>A dataclass to hold data generated from a PLECS simulation.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="plecsutil.ui.DataSet.data">
+<span class="sig-name descname"><span class="pre">data</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">ndarray</span></em><a class="headerlink" href="#plecsutil.ui.DataSet.data" title="Permalink to this definition"></a></dt>
+<dd><p>(N, M) matrix containing the signals connected to the output data ports.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="plecsutil.ui.DataSet.meta">
+<span class="sig-name descname"><span class="pre">meta</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">{}</span></em><a class="headerlink" href="#plecsutil.ui.DataSet.meta" title="Permalink to this definition"></a></dt>
+<dd><p>A dictionary containing model and controller paramaters used to run the
+simulation. The dictionary always contain the following key:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">model_params</span></code>: The dictionary with the model parameters used in the
+simulation.</p></li>
+</ul>
+<p>The dictionary may contain the following keys, if they are specified
+when running a simulation:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">ctl</span></code>: Controller used in the simulation. Only for models with
+multiple controllers.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ctl_params</span></code>: Parameters used to generate the gains/parameters of the
+controller.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ctl_label</span></code>: <a class="reference internal" href="#plecsutil.ui.Controller.label" title="plecsutil.ui.Controller.label"><code class="xref py py-attr docutils literal notranslate"><span class="pre">Controller.label</span></code></a> of controller used for the
+simulation.</p></li>
+</ul>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="plecsutil.ui.DataSet.source">
+<span class="sig-name descname"><span class="pre">source</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#plecsutil.ui.DataSet.source" title="Permalink to this definition"></a></dt>
+<dd><p>PLECS info (version, time and date of simulation).</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="plecsutil.ui.DataSet.t">
+<span class="sig-name descname"><span class="pre">t</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">ndarray</span></em><a class="headerlink" href="#plecsutil.ui.DataSet.t" title="Permalink to this definition"></a></dt>
+<dd><p>N-size vector with time steps of the simulation.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="plecsutil.ui.PlecsModel">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">plecsutil.ui.</span></span><span class="sig-name descname"><span class="pre">PlecsModel</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">file_path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model_params</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">get_ctl_gains</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">controllers</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#plecsutil.ui.PlecsModel" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>A class representing a PLECS  model.</p>
+<p><a class="reference internal" href="#plecsutil.ui.PlecsModel" title="plecsutil.ui.PlecsModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">PlecsModel</span></code></a> provides a framework to set up and run simulations,
+and manage parameters of the model and its controllers.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>file</strong> (<em>str</em>) – The filename of the model (without the <code class="docutils literal notranslate"><span class="pre">.plecs</span></code> extension).</p></li>
+<li><p><strong>file_path</strong> (<em>str</em>) – The path to the directory containing the model file.</p></li>
+<li><p><strong>model_params</strong> (<em>dict</em>) – A dictionary of model parameters for the simulation. These parameters
+are used to initialize the model and can be overridden by
+simulation-specific parameters when running simulations.</p></li>
+<li><p><strong>get_ctl_gains</strong> (<em>callable</em><em>, </em><em>optional</em>) – A function for retrieving control gains for the model’s controller.
+Only relevant if the model has a single controller.</p></li>
+<li><p><strong>controllers</strong> (<a class="reference internal" href="#plecsutil.ui.Controller" title="plecsutil.ui.Controller"><code class="xref py py-class docutils literal notranslate"><span class="pre">Controller</span></code></a>, optional) – An object representingthe  controllers of the model. Only relevant for
+models with multiple controllers.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="plecsutil.ui.PlecsModel.sim">
+<span class="sig-name descname"><span class="pre">sim</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sim_params</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">{}</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ctl</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ctl_params</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">{}</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ret_data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">close_sim</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#plecsutil.ui.PlecsModel.sim" title="Permalink to this definition"></a></dt>
+<dd><p>Runs the PLECS simulation with specified parameters and returns the
+simulation data.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>sim_params</strong> (<em>dict</em><em>, </em><em>optional</em>) – Dictionary of simulation parameters to override the model’s default
+parameters. If not set, the simulation is executed with the default
+parameters.</p></li>
+<li><p><strong>ctl</strong> (<em>NoneType</em><em> or </em><em>str</em><em>, </em><em>optional</em>) – Sets the controller to be enabled in the simulation, in case of
+models with multiple controllers. If not set, the simulation runs
+with the default controller and its parameters (if there are any).</p></li>
+<li><p><strong>ctl_params</strong> (<em>dict</em><em>, </em><em>optional</em>) – Controller parameters, in case of model with one or more
+controllers. If not set, the default controller parameters are used
+for the simulation (if there is one).</p></li>
+<li><p><strong>ret_data</strong> (<em>bool</em><em>, </em><em>optional</em>) – Whether to return the simulation. Default is <cite>True</cite>.</p></li>
+<li><p><strong>save</strong> (<em>bool</em><em> or </em><em>str</em><em>, </em><em>optional</em>) – Specifies whether to save the simulation data. If <cite>False</cite>, the data
+is not saved. If a string is provided, it will be used as the
+filename to save the data. Default is <cite>False</cite>.</p></li>
+<li><p><strong>close_sim</strong> (<em>bool</em><em>, </em><em>optional</em>) – Whether to close PLECS after running the simulation. Default is
+<cite>True</cite>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A <a class="reference internal" href="#plecsutil.ui.DataSet" title="plecsutil.ui.DataSet"><code class="xref py py-class docutils literal notranslate"><span class="pre">DataSet</span></code></a> object containing the simulation data. Returned
+only if <cite>ret_data</cite> is set to <cite>True</cite>.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#plecsutil.ui.DataSet" title="plecsutil.ui.DataSet"><code class="xref py py-class docutils literal notranslate"><span class="pre">DataSet</span></code></a></p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>KeyError</strong> – If any parameter in <code class="docutils literal notranslate"><span class="pre">sim_params</span></code> or <code class="docutils literal notranslate"><span class="pre">ctl_params</span></code> does not exist
+    in the default model parameters, <code class="docutils literal notranslate"><span class="pre">KeyError</span></code> is raised.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="plecsutil.ui.gen_controllers_params">
+<span class="sig-prename descclassname"><span class="pre">plecsutil.ui.</span></span><span class="sig-name descname"><span class="pre">gen_controllers_params</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n_ctl</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">active_ctl</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#plecsutil.ui.gen_controllers_params" title="Permalink to this definition"></a></dt>
+<dd><p>Generates the logic to set controllers in models with multiple controllers.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>n_ctl</strong> (<em>int</em>) – The total number of controllers.</p></li>
+<li><p><strong>active_ctl</strong> (<em>int</em>) – The index of the active controller to be enabled in the simulation.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Logic for the <code class="docutils literal notranslate"><span class="pre">.m</span></code> file as a dictionary.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="plecsutil.ui.load_data">
+<span class="sig-prename descclassname"><span class="pre">plecsutil.ui.</span></span><span class="sig-name descname"><span class="pre">load_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#plecsutil.ui.load_data" title="Permalink to this definition"></a></dt>
+<dd><p>Loads simulation data from a zipped file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>file</strong> (<em>str</em>) – Name of the file, without <code class="docutils literal notranslate"><span class="pre">.zip</span></code>. Must include the full or relative
+path if <code class="docutils literal notranslate"><span class="pre">file</span></code> is in a different directory.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>data</strong> – Data loaded from the specified file.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#plecsutil.ui.DataSet" title="plecsutil.ui.DataSet"><code class="xref py py-class docutils literal notranslate"><span class="pre">DataSet</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="plecsutil.ui.save_data">
+<span class="sig-prename descclassname"><span class="pre">plecsutil.ui.</span></span><span class="sig-name descname"><span class="pre">save_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#plecsutil.ui.save_data" title="Permalink to this definition"></a></dt>
+<dd><p>Saves simulation data to a zipped file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>file</strong> (<em>str</em>) – Name of the file (without the <code class="docutils literal notranslate"><span class="pre">.zip</span></code> extension). The name can contain
+a relative or full path.</p></li>
+<li><p><strong>data</strong> (<a class="reference internal" href="#plecsutil.ui.DataSet" title="plecsutil.ui.DataSet"><code class="xref py py-class docutils literal notranslate"><span class="pre">DataSet</span></code></a>) – Simulation data.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
 </section>
 
 
@@ -98,7 +296,7 @@
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2024, Marco Guerreiro.</p>
+    <p>&#169; Copyright 2024, plecsutil developers.</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
