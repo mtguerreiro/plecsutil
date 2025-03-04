@@ -5,7 +5,7 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>plecsutil.ui &mdash; plecsutil v0.1 documentation</title>
-      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=fa44fd50" />
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=03e43079" />
       <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=19f00094" />
 
   
@@ -189,6 +189,31 @@ models with multiple controllers.</p></li>
 </ul>
 </dd>
 </dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="plecsutil.ui.PlecsModel.gen_m_file">
+<span class="sig-name descname"><span class="pre">gen_m_file</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sim_params</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">{}</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ctl</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ctl_params</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">{}</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#plecsutil.ui.PlecsModel.gen_m_file" title="Permalink to this definition"></a></dt>
+<dd><p>Generates the <cite>.m</cite> file for the simulation model.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>sim_params</strong> (<em>dict</em><em>, </em><em>optional</em>) – Dictionary of simulation parameters to override the model’s default
+parameters. If not set, the simulation is executed with the default
+parameters.</p></li>
+<li><p><strong>ctl</strong> (<em>NoneType</em><em> or </em><em>str</em><em>, </em><em>optional</em>) – Sets the controller to be enabled in the simulation, in case of
+models with multiple controllers. If not set, the simulation runs
+with the default controller and its parameters (if there are any).</p></li>
+<li><p><strong>ctl_params</strong> (<em>dict</em><em>, </em><em>optional</em>) – Controller parameters, in case of model with one or more
+controllers. If not set, the default controller parameters are used
+for the simulation (if there is one).</p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>KeyError</strong> – If any parameter in <code class="docutils literal notranslate"><span class="pre">sim_params</span></code> or <code class="docutils literal notranslate"><span class="pre">ctl_params</span></code> does not exist
+    in the default model parameters, <code class="docutils literal notranslate"><span class="pre">KeyError</span></code> is raised.</p>
+</dd>
+</dl>
+</dd></dl>
+
 <dl class="py method">
 <dt class="sig sig-object py" id="plecsutil.ui.PlecsModel.sim">
 <span class="sig-name descname"><span class="pre">sim</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sim_params</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">{}</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ctl</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ctl_params</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">{}</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ret_data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">close_sim</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#plecsutil.ui.PlecsModel.sim" title="Permalink to this definition"></a></dt>

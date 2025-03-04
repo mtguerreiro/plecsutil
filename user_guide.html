@@ -5,7 +5,7 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>User guide &mdash; plecsutil v0.1 documentation</title>
-      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=fa44fd50" />
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=03e43079" />
       <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=19f00094" />
 
   
@@ -125,9 +125,9 @@
 <p>An example of a Python script is shown below. Note that the script assumes to be in the same folder as that the PLECS model, since it defines the <code class="docutils literal notranslate"><span class="pre">plecs_file_path</span></code> as the current working directory.</p>
 <div class="literal-block-wrapper docutils container" id="id1">
 <div class="code-block-caption"><span class="caption-number">Listing 1 </span><span class="caption-text">Running a PLECS simulation with <code class="docutils literal notranslate"><span class="pre">plecsutil</span></code> (<a class="reference download internal" download="" href="_downloads/051590665a5a8077addc9bb83cc503d0/buck_intro.py"><code class="xref download docutils literal notranslate"><span class="pre">download</span> <span class="pre">source</span></code></a>)</span><a class="headerlink" href="#id1" title="Permalink to this code"></a></div>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
-<span class="kn">import</span> <span class="nn">plecsutil</span> <span class="k">as</span> <span class="nn">pu</span>
-<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">plecsutil</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pu</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">ion</span><span class="p">()</span>
 
 <span class="c1"># Model params</span>
@@ -171,9 +171,9 @@
 <p>An example of running the simulation of the Buck converter with different <code class="docutils literal notranslate"><span class="pre">R</span></code> values is shown below. In this example, <a class="reference internal" href="plecsutil.ui.html#plecsutil.ui.PlecsModel.sim" title="plecsutil.ui.PlecsModel.sim"><code class="xref py py-meth docutils literal notranslate"><span class="pre">plecsutil.ui.PlecsModel.sim()</span></code></a> is called with <code class="docutils literal notranslate"><span class="pre">sim_params</span></code> specifying different values for <code class="docutils literal notranslate"><span class="pre">R</span></code>.</p>
 <div class="literal-block-wrapper docutils container" id="id2">
 <div class="code-block-caption"><span class="caption-number">Listing 2 </span><span class="caption-text">Running the PLECS model with different model parameters (<a class="reference download internal" download="" href="_downloads/e699d3e40df3829849329ade43d001bd/buck_intro_var_r.py"><code class="xref download docutils literal notranslate"><span class="pre">download</span> <span class="pre">source</span></code></a>)</span><a class="headerlink" href="#id2" title="Permalink to this code"></a></div>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
-<span class="kn">import</span> <span class="nn">plecsutil</span> <span class="k">as</span> <span class="nn">pu</span>
-<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">plecsutil</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pu</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">ion</span><span class="p">()</span>
 
 <span class="c1"># Model params</span>
@@ -217,7 +217,7 @@
 <p>For the Buck example discussed thus far, we can create an associated <code class="docutils literal notranslate"><span class="pre">model.py</span></code> with the following contents:</p>
 <div class="literal-block-wrapper docutils container" id="id3">
 <div class="code-block-caption"><span class="caption-number">Listing 3 </span><span class="caption-text">Example of <code class="docutils literal notranslate"><span class="pre">model.py</span></code> file (<a class="reference download internal" download="" href="_downloads/ef32c79c1ac67e49e1ccfaa472a08482/model.py"><code class="xref download docutils literal notranslate"><span class="pre">download</span> <span class="pre">source</span></code></a>)</span><a class="headerlink" href="#id3" title="Permalink to this code"></a></div>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">params</span><span class="p">():</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">params</span><span class="p">():</span>
 
     <span class="n">model_params</span> <span class="o">=</span> <span class="p">{</span>
         <span class="s1">&#39;f_pwm&#39;</span><span class="p">:</span> <span class="mf">100e3</span><span class="p">,</span>
@@ -234,12 +234,12 @@
 <p>Now, <code class="docutils literal notranslate"><span class="pre">model.py</span></code> can be imported by Python scripts to get the model parameters. For example, to run the Buck converter model with varying values for <code class="docutils literal notranslate"><span class="pre">R</span></code>:</p>
 <div class="literal-block-wrapper docutils container" id="id4">
 <div class="code-block-caption"><span class="caption-number">Listing 4 </span><span class="caption-text">Using <code class="docutils literal notranslate"><span class="pre">model.py</span></code> to run simulations (<a class="reference download internal" download="" href="_downloads/566b2060af4ba5e40b982a9d3406b00e/buck_intro_model.py"><code class="xref download docutils literal notranslate"><span class="pre">download</span> <span class="pre">source</span></code></a>)</span><a class="headerlink" href="#id4" title="Permalink to this code"></a></div>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
-<span class="kn">import</span> <span class="nn">plecsutil</span> <span class="k">as</span> <span class="nn">pu</span>
-<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">plecsutil</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pu</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">ion</span><span class="p">()</span>
 
-<span class="kn">import</span> <span class="nn">model</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">model</span>
 
 <span class="c1"># Plecs file</span>
 <span class="n">plecs_file</span> <span class="o">=</span> <span class="s1">&#39;buck_intro&#39;</span>
@@ -283,10 +283,10 @@
 <p>Now, we can identify two sets of parameters: the plant parameters, and the controller parameters. These two combined compose the model parameters. In our <code class="docutils literal notranslate"><span class="pre">model.py</span></code> file, we can then create three functions: one for the parameters of the plant, one for the parameters of the controller, and one that concatenates them. An example of such structure is shown in the script below.</p>
 <div class="literal-block-wrapper docutils container" id="id5">
 <div class="code-block-caption"><span class="caption-number">Listing 5 </span><span class="caption-text"><code class="docutils literal notranslate"><span class="pre">model.py</span></code> with plant, controller and model parameters (<a class="reference download internal" download="" href="_downloads/40e950f1735fadbcdd72f7fad1d6a935/model.py"><code class="xref download docutils literal notranslate"><span class="pre">download</span> <span class="pre">source</span></code></a>)</span><a class="headerlink" href="#id5" title="Permalink to this code"></a></div>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">import</span> <span class="nn">scipy.signal</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">scipy.signal</span>
 
-<span class="k">def</span> <span class="nf">plant_params</span><span class="p">():</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">plant_params</span><span class="p">():</span>
 
     <span class="n">V_in</span> <span class="o">=</span> <span class="mi">20</span>
     <span class="n">Vo_ref</span> <span class="o">=</span> <span class="mi">10</span>
@@ -313,7 +313,7 @@
     <span class="k">return</span> <span class="n">params</span>
 
 
-<span class="k">def</span> <span class="nf">controller_gains</span><span class="p">(</span><span class="n">ctl_params</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">controller_gains</span><span class="p">(</span><span class="n">ctl_params</span><span class="p">):</span>
     
     <span class="n">ts</span> <span class="o">=</span> <span class="n">ctl_params</span><span class="p">[</span><span class="s1">&#39;ts&#39;</span><span class="p">]</span>
     <span class="n">os</span> <span class="o">=</span> <span class="n">ctl_params</span><span class="p">[</span><span class="s1">&#39;os&#39;</span><span class="p">]</span>
@@ -358,7 +358,7 @@
     <span class="k">return</span> <span class="p">{</span><span class="s1">&#39;Kx&#39;</span><span class="p">:</span> <span class="n">Kx</span><span class="p">,</span> <span class="s1">&#39;Ke&#39;</span><span class="p">:</span> <span class="n">Ke</span><span class="p">}</span>
 
 
-<span class="k">def</span> <span class="nf">params</span><span class="p">():</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">params</span><span class="p">():</span>
 
     <span class="c1"># Plant parameters</span>
     <span class="n">_plant_params</span> <span class="o">=</span> <span class="n">plant_params</span><span class="p">()</span>
@@ -381,12 +381,12 @@
 <p>When there is a  controller, <code class="docutils literal notranslate"><span class="pre">plecsutil</span></code> is made aware of it by informing the function that returns the controller gains when creating the <a class="reference internal" href="plecsutil.ui.html#plecsutil.ui.PlecsModel" title="plecsutil.ui.PlecsModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">plecsutil.ui.PlecsModel</span></code></a> object. When running the simulation, the user can set the parameters of the controller and pass them to <a class="reference internal" href="plecsutil.ui.html#plecsutil.ui.PlecsModel.sim" title="plecsutil.ui.PlecsModel.sim"><code class="xref py py-meth docutils literal notranslate"><span class="pre">plecsutil.ui.PlecsModel.sim()</span></code></a>. Internally,  <code class="docutils literal notranslate"><span class="pre">plecsutil</span></code> calls the function to get the gains, and updates the parameters of the model automatically. This is demonstrated in the script below.</p>
 <div class="literal-block-wrapper docutils container" id="id6">
 <div class="code-block-caption"><span class="caption-number">Listing 6 </span><span class="caption-text">Running a simulation with a single controller (<a class="reference download internal" download="" href="_downloads/14421dbbc1d9a41f598b9b5ae68a1b21/buck_single_controller.py"><code class="xref download docutils literal notranslate"><span class="pre">download</span> <span class="pre">source</span></code></a> and <a class="reference download internal" download="" href="_downloads/f0ab53613b54340ba502a9b8cd96514e/buck_single_controller.plecs"><code class="xref download docutils literal notranslate"><span class="pre">PLECS</span> <span class="pre">model</span></code></a>)</span><a class="headerlink" href="#id6" title="Permalink to this code"></a></div>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
 
-<span class="kn">import</span> <span class="nn">plecsutil</span> <span class="k">as</span> <span class="nn">pu</span>
-<span class="kn">import</span> <span class="nn">model</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">plecsutil</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pu</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">model</span>
 
-<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">ion</span><span class="p">()</span>
 
 <span class="c1"># --- Input ---</span>
@@ -431,12 +431,12 @@
 <p>Now, running the simulation with different controller parameters is just a matter of calling <a class="reference internal" href="plecsutil.ui.html#plecsutil.ui.PlecsModel.sim" title="plecsutil.ui.PlecsModel.sim"><code class="xref py py-meth docutils literal notranslate"><span class="pre">plecsutil.ui.PlecsModel.sim()</span></code></a> with different control parameters. An example is demonstrated in the script below.</p>
 <div class="literal-block-wrapper docutils container" id="id7">
 <div class="code-block-caption"><span class="caption-number">Listing 7 </span><span class="caption-text">Running a simulation with different controller parameters (<a class="reference download internal" download="" href="_downloads/eeca70fdc526fd4845a3b7e4d151b770/buck_single_controller_var_params.py"><code class="xref download docutils literal notranslate"><span class="pre">download</span> <span class="pre">source</span></code></a>)</span><a class="headerlink" href="#id7" title="Permalink to this code"></a></div>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
 
-<span class="kn">import</span> <span class="nn">plecsutil</span> <span class="k">as</span> <span class="nn">pu</span>
-<span class="kn">import</span> <span class="nn">model</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">plecsutil</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pu</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">model</span>
 
-<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">ion</span><span class="p">()</span>
 
 <span class="c1"># --- Input ---</span>
@@ -512,12 +512,12 @@
 <p>Now, we will build the <code class="docutils literal notranslate"><span class="pre">model.py</span></code> file much in the same way as before. We can create one function for the parameters of the plant, and one function for each controller. Then, a single function is created to concatenate all the parameters in a single model parameter dictionary. A script for this is shown below.</p>
 <div class="literal-block-wrapper docutils container" id="id8">
 <div class="code-block-caption"><span class="caption-number">Listing 8 </span><span class="caption-text"><code class="docutils literal notranslate"><span class="pre">model.py</span></code> file for multiple controllers (<a class="reference download internal" download="" href="_downloads/e3e7a246425a4f8290f52f7ec88e2092/model.py"><code class="xref download docutils literal notranslate"><span class="pre">download</span> <span class="pre">source</span></code></a>)</span><a class="headerlink" href="#id8" title="Permalink to this code"></a></div>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">import</span> <span class="nn">scipy.signal</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">scipy.signal</span>
 
-<span class="kn">import</span> <span class="nn">plecsutil</span> <span class="k">as</span> <span class="nn">pu</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">plecsutil</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pu</span>
 
-<span class="k">def</span> <span class="nf">plant_params</span><span class="p">():</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">plant_params</span><span class="p">():</span>
 
     <span class="n">V_in</span> <span class="o">=</span> <span class="mi">20</span>
     <span class="n">Vo_ref</span> <span class="o">=</span> <span class="mi">10</span>
@@ -544,7 +544,7 @@
     <span class="k">return</span> <span class="n">_params</span>
 
 
-<span class="k">def</span> <span class="nf">sfb_get_gains</span><span class="p">(</span><span class="n">ctl_params</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">sfb_get_gains</span><span class="p">(</span><span class="n">ctl_params</span><span class="p">):</span>
     
     <span class="n">ts</span> <span class="o">=</span> <span class="n">ctl_params</span><span class="p">[</span><span class="s1">&#39;ts&#39;</span><span class="p">]</span>
     <span class="n">os</span> <span class="o">=</span> <span class="n">ctl_params</span><span class="p">[</span><span class="s1">&#39;os&#39;</span><span class="p">]</span>
@@ -588,7 +588,7 @@
     <span class="k">return</span> <span class="p">{</span><span class="s1">&#39;Kx&#39;</span><span class="p">:</span> <span class="n">Kx</span><span class="p">,</span> <span class="s1">&#39;Ke&#39;</span><span class="p">:</span> <span class="n">Ke</span><span class="p">}</span>
 
 
-<span class="k">def</span> <span class="nf">cascaded_get_gains</span><span class="p">(</span><span class="n">ctl_params</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">cascaded_get_gains</span><span class="p">(</span><span class="n">ctl_params</span><span class="p">):</span>
 
     <span class="n">_plant_params</span> <span class="o">=</span> <span class="n">plant_params</span><span class="p">()</span>
     <span class="n">R</span> <span class="o">=</span> <span class="n">_plant_params</span><span class="p">[</span><span class="s1">&#39;R&#39;</span><span class="p">]</span>
@@ -615,7 +615,7 @@
     <span class="k">return</span> <span class="n">params</span>
 
 
-<span class="k">def</span> <span class="nf">params</span><span class="p">():</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">params</span><span class="p">():</span>
 
     <span class="c1"># Plant parameters</span>
     <span class="n">_plant_params</span> <span class="o">=</span> <span class="n">plant_params</span><span class="p">()</span>
@@ -647,7 +647,7 @@
     <span class="k">return</span> <span class="n">_params</span>
 
 
-<span class="k">def</span> <span class="nf">_zeta_wn</span><span class="p">(</span><span class="n">ts</span><span class="p">,</span> <span class="n">os</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">_zeta_wn</span><span class="p">(</span><span class="n">ts</span><span class="p">,</span> <span class="n">os</span><span class="p">):</span>
 
     <span class="n">zeta</span> <span class="o">=</span> <span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">os</span> <span class="o">/</span> <span class="mi">100</span><span class="p">)</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">os</span> <span class="o">/</span> <span class="mi">100</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span> <span class="p">)</span>
     <span class="n">wn</span> <span class="o">=</span> <span class="mi">4</span> <span class="o">/</span> <span class="n">ts</span> <span class="o">/</span> <span class="n">zeta</span>
@@ -666,15 +666,15 @@
 <p>Now, we can finally build the script to run the simulations with different controllers, with an example given below. The <a class="reference internal" href="plecsutil.ui.html#plecsutil.ui.PlecsModel" title="plecsutil.ui.PlecsModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">plecsutil.ui.PlecsModel</span></code></a> is created as before, but now we give the controllers of the model with <code class="docutils literal notranslate"><span class="pre">controllers=model.CONTROLLERS</span></code>. Then, when running the simulation, we give <code class="docutils literal notranslate"><span class="pre">ctl_params</span></code> just like we do for the single controller models, but we additionally give <code class="docutils literal notranslate"><span class="pre">ctl</span></code>, which must be one of the controllers defined in <code class="docutils literal notranslate"><span class="pre">model.CONTROLLERS</span></code>. Note that <code class="docutils literal notranslate"><span class="pre">ctl_params</span></code> changes for each controller (although they could also be the same).</p>
 <div class="literal-block-wrapper docutils container" id="id9">
 <div class="code-block-caption"><span class="caption-number">Listing 9 </span><span class="caption-text"><code class="docutils literal notranslate"><span class="pre">model.py</span></code> file for multiple controllers (<a class="reference download internal" download="" href="_downloads/3ab96dca2230379db1120b9a3ed5f5a9/buck_multiple_controllers.py"><code class="xref download docutils literal notranslate"><span class="pre">download</span> <span class="pre">source</span></code></a>)</span><a class="headerlink" href="#id9" title="Permalink to this code"></a></div>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
-<span class="kn">import</span> <span class="nn">plecsutil</span> <span class="k">as</span> <span class="nn">pu</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">plecsutil</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pu</span>
 
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 
-<span class="kn">import</span> <span class="nn">matplotlib</span>
-<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
 
-<span class="kn">import</span> <span class="nn">model</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">model</span>
 
 <span class="n">plt</span><span class="o">.</span><span class="n">ion</span><span class="p">()</span>
 
