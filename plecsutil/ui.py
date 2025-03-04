@@ -173,6 +173,51 @@ class PlecsModel:
             return sim_data
 
 
+    def gen_m_file(self, sim_params={}, ctl=None, ctl_params={}):
+        """Generates the `.m` file for the simulation model.
+
+        Parameters
+        ----------
+        sim_params : dict, optional
+            Dictionary of simulation parameters to override the model's default
+            parameters. If not set, the simulation is executed with the default
+            parameters.
+
+        ctl : NoneType or str, optional
+            Sets the controller to be enabled in the simulation, in case of
+            models with multiple controllers. If not set, the simulation runs
+            with the default controller and its parameters (if there are any).
+
+        ctl_params : dict, optional
+            Controller parameters, in case of model with one or more
+            controllers. If not set, the default controller parameters are used
+            for the simulation (if there is one).
+
+        Raises
+        ------
+        KeyError
+            If any parameter in ``sim_params`` or ``ctl_params`` does not exist
+            in the default model parameters, ``KeyError`` is raised.
+
+        """
+        model_ctl_params, ctl_label = self._get_model_ctl_params(ctl, ctl_params)
+
+        # Creats a user_params dict with new sim and ctl params        
+        user_params = {}
+        user_params.update(sim_params)
+        user_params.update(model_ctl_params)
+
+        # Updates model_params with user params
+        model_params = dict(self._model_params)
+        for k, v in user_params.items():
+            if k not in model_params:
+                raise KeyError('Parameter \'{:}\' not a model parameter'.format(k))
+            model_params[k] = v
+
+        # Generates .m file
+        pu.pi.gen_m(self._file, self._file_path, model_params)
+
+        
     def _get_model_ctl_params(self, ctl, ctl_params):
 
         model_ctl_params = {}
