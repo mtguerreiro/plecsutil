@@ -51,6 +51,7 @@ class DataSet:
     #:   controller.
     #: * ``ctl_label``: :attr:`Controller.label` of controller used for the
     #:   simulation.
+    #: * ``extras``: Extra metadata that might be useful storing. 
     meta : {}
 
 
@@ -95,7 +96,7 @@ class PlecsModel:
         self._controllers = controllers
 
 
-    def sim(self, sim_params={}, ctl=None, ctl_params={}, ret_data=True, save=False, close_sim=True):
+    def sim(self, sim_params={}, ctl=None, ctl_params={}, extra_meta={}, ret_data=True, save=False, close_sim=True):
         """Runs the PLECS simulation with specified parameters and returns the
         simulation data.
 
@@ -115,6 +116,10 @@ class PlecsModel:
             Controller parameters, in case of model with one or more
             controllers. If not set, the default controller parameters are used
             for the simulation (if there is one).
+
+        extra_meta : dict, optional
+            Extra metadata used to build the controller or run the simulation
+            that don't fit in the other meta fields.
 
         ret_data : bool, optional
             Whether to return the simulation. Default is `True`.
@@ -163,6 +168,8 @@ class PlecsModel:
             meta.update( {'ctl_params': ctl_params} )
         if ctl is not None:
             meta.update( {'ctl': ctl, 'ctl_label': ctl_label} )
+        if extra_meta:
+            meta.update( {'extras': extra_meta} )
         
         sim_data = DataSet(t, data, plecs_header, meta)
 
