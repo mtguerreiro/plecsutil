@@ -150,6 +150,7 @@ multiple controllers.</p></li>
 controller.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">ctl_label</span></code>: <a class="reference internal" href="#plecsutil.ui.Controller.label" title="plecsutil.ui.Controller.label"><code class="xref py py-attr docutils literal notranslate"><span class="pre">Controller.label</span></code></a> of controller used for the
 simulation.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">extras</span></code>: Extra metadata that might be useful storing.</p></li>
 </ul>
 </dd></dl>
 
@@ -216,7 +217,7 @@ for the simulation (if there is one).</p></li>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="plecsutil.ui.PlecsModel.sim">
-<span class="sig-name descname"><span class="pre">sim</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sim_params</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">{}</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ctl</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ctl_params</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">{}</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ret_data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">close_sim</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#plecsutil.ui.PlecsModel.sim" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">sim</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sim_params</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">{}</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ctl</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ctl_params</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">{}</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">extra_meta</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">{}</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ret_data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">close_sim</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#plecsutil.ui.PlecsModel.sim" title="Permalink to this definition"></a></dt>
 <dd><p>Runs the PLECS simulation with specified parameters and returns the
 simulation data.</p>
 <dl class="field-list simple">
@@ -231,6 +232,8 @@ with the default controller and its parameters (if there are any).</p></li>
 <li><p><strong>ctl_params</strong> (<em>dict</em><em>, </em><em>optional</em>) – Controller parameters, in case of model with one or more
 controllers. If not set, the default controller parameters are used
 for the simulation (if there is one).</p></li>
+<li><p><strong>extra_meta</strong> (<em>dict</em><em>, </em><em>optional</em>) – Extra metadata used to build the controller or run the simulation
+that don’t fit in the other meta fields.</p></li>
 <li><p><strong>ret_data</strong> (<em>bool</em><em>, </em><em>optional</em>) – Whether to return the simulation. Default is <cite>True</cite>.</p></li>
 <li><p><strong>save</strong> (<em>bool</em><em> or </em><em>str</em><em>, </em><em>optional</em>) – Specifies whether to save the simulation data. If <cite>False</cite>, the data
 is not saved. If a string is provided, it will be used as the
