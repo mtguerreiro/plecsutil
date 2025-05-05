@@ -240,11 +240,12 @@ class PlecsModel:
             model_ctl_params.update( ctl_gains )
             ctl_label = self._controllers[ctl].label
             
-        elif ctl_params:
+        else:
             if type(self._controllers) is Controller:
                 model_ctl_params.update( self._controllers.get_gains(ctl_params) )
             else:
-                model_ctl_params.update( self._get_ctl_gains(ctl_params) )
+                if self._get_ctl_gains is not None:
+                    model_ctl_params.update( self._get_ctl_gains(ctl_params) )
 
         return model_ctl_params, ctl_label
 
