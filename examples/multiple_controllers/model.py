@@ -140,6 +140,6 @@ def _zeta_wn(ts, os):
 
 
 CONTROLLERS = {
-    'sfb' : pu.ui.Controller(port=1, get_gains=sfb_get_gains, label='State feedback'),
-    'casc': pu.ui.Controller(port=2, get_gains=cascaded_get_gains, label='Cascaded')
+    'sfb' : pu.ui.Controller(idx=1, get_gains=sfb_get_gains, label='State feedback'),
+    'casc': pu.ui.Controller(idx=2, get_gains=cascaded_get_gains, label='Cascaded')
 }

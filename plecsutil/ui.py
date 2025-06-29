@@ -11,8 +11,8 @@ import zipfile
 class Controller:
     """A class to represent multiple controllers in a PLECS model."""
 
-    #: Port of the multiport switch that the controller is connected to.
-    port : int = 1
+    #: Index of the controller in the configurable subsystem.
+    idx : int = 1
 
     #: Callback to get the gains of the controller that are used in the model.
     #: The function should take a dictionary with the controller parameters as
@@ -232,7 +232,7 @@ class PlecsModel:
         
         if ctl:
             n_ctl = len(self._controllers)
-            active_ctl = self._controllers[ctl].port
+            active_ctl = self._controllers[ctl].idx
             c_params = gen_controllers_params(n_ctl, active_ctl)
             model_ctl_params.update( c_params )
 
